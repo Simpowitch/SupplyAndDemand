@@ -129,6 +129,7 @@
     <ClCompile Include="Manufacturer.cpp" />
     <ClCompile Include="Pop.cpp" />
     <ClCompile Include="SupplyAndDemand.cpp" />
+    <ClCompile Include="Transporter.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Entity.h" />
@@ -138,6 +139,7 @@
     <ClInclude Include="Manufacturer.h" />
     <ClInclude Include="ManufacturerSharedData.h" />
     <ClInclude Include="Pop.h" />
+    <ClInclude Include="Transporter.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

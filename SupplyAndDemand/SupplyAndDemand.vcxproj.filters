@@ -33,6 +33,9 @@
     <ClCompile Include="SupplyAndDemand.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="Transporter.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Entity.h">
@@ -54,6 +57,9 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="Pop.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Transporter.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

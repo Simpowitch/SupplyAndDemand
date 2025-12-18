@@ -1,7 +1,24 @@
 {
   "Version": 1,
   "WorkspaceRootPath": "E:\\Development\\SupplyAndDemand\\",
-  "Documents": [],
+  "Documents": [
+    {
+      "AbsoluteMoniker": "D:0:0:{F0210BE5-16D4-4A5B-B6DD-C5926DC3C63D}|SupplyAndDemand\\SupplyAndDemand.vcxproj|E:\\Development\\SupplyAndDemand\\SupplyAndDemand\\Transporter.h||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}",
+      "RelativeMoniker": "D:0:0:{F0210BE5-16D4-4A5B-B6DD-C5926DC3C63D}|SupplyAndDemand\\SupplyAndDemand.vcxproj|solutionrelative:SupplyAndDemand\\Transporter.h||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{F0210BE5-16D4-4A5B-B6DD-C5926DC3C63D}|SupplyAndDemand\\SupplyAndDemand.vcxproj|E:\\Development\\SupplyAndDemand\\SupplyAndDemand\\InputManager.cpp||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}",
+      "RelativeMoniker": "D:0:0:{F0210BE5-16D4-4A5B-B6DD-C5926DC3C63D}|SupplyAndDemand\\SupplyAndDemand.vcxproj|solutionrelative:SupplyAndDemand\\InputManager.cpp||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{F0210BE5-16D4-4A5B-B6DD-C5926DC3C63D}|SupplyAndDemand\\SupplyAndDemand.vcxproj|E:\\Development\\SupplyAndDemand\\SupplyAndDemand\\GameWorld.cpp||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}",
+      "RelativeMoniker": "D:0:0:{F0210BE5-16D4-4A5B-B6DD-C5926DC3C63D}|SupplyAndDemand\\SupplyAndDemand.vcxproj|solutionrelative:SupplyAndDemand\\GameWorld.cpp||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{F0210BE5-16D4-4A5B-B6DD-C5926DC3C63D}|SupplyAndDemand\\SupplyAndDemand.vcxproj|E:\\Development\\SupplyAndDemand\\SupplyAndDemand\\Entity.cpp||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}",
+      "RelativeMoniker": "D:0:0:{F0210BE5-16D4-4A5B-B6DD-C5926DC3C63D}|SupplyAndDemand\\SupplyAndDemand.vcxproj|solutionrelative:SupplyAndDemand\\Entity.cpp||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}"
+    }
+  ],
   "DocumentGroupContainers": [
     {
       "Orientation": 0,
@@ -9,7 +26,7 @@
       "DocumentGroups": [
         {
           "DockedWidth": 243,
-          "SelectedChildIndex": -1,
+          "SelectedChildIndex": 25,
           "Children": [
             {
               "$type": "Bookmark",
@@ -110,6 +127,58 @@
             {
               "$type": "Bookmark",
               "Name": "ST:130:0:{1fc202d4-d401-403c-9834-5b218574bb67}"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 0,
+              "Title": "Transporter.h",
+              "DocumentMoniker": "E:\\Development\\SupplyAndDemand\\SupplyAndDemand\\Transporter.h",
+              "RelativeDocumentMoniker": "SupplyAndDemand\\Transporter.h",
+              "ToolTip": "E:\\Development\\SupplyAndDemand\\SupplyAndDemand\\Transporter.h",
+              "RelativeToolTip": "SupplyAndDemand\\Transporter.h",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAEAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000680|",
+              "WhenOpened": "2025-12-18T07:19:42.611Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 1,
+              "Title": "InputManager.cpp",
+              "DocumentMoniker": "E:\\Development\\SupplyAndDemand\\SupplyAndDemand\\InputManager.cpp",
+              "RelativeDocumentMoniker": "SupplyAndDemand\\InputManager.cpp",
+              "ToolTip": "E:\\Development\\SupplyAndDemand\\SupplyAndDemand\\InputManager.cpp",
+              "RelativeToolTip": "SupplyAndDemand\\InputManager.cpp",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000677|",
+              "WhenOpened": "2025-12-18T07:10:37.837Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 2,
+              "Title": "GameWorld.cpp",
+              "DocumentMoniker": "E:\\Development\\SupplyAndDemand\\SupplyAndDemand\\GameWorld.cpp",
+              "RelativeDocumentMoniker": "SupplyAndDemand\\GameWorld.cpp",
+              "ToolTip": "E:\\Development\\SupplyAndDemand\\SupplyAndDemand\\GameWorld.cpp",
+              "RelativeToolTip": "SupplyAndDemand\\GameWorld.cpp",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000677|",
+              "WhenOpened": "2025-12-18T07:10:37.073Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 3,
+              "Title": "Entity.cpp",
+              "DocumentMoniker": "E:\\Development\\SupplyAndDemand\\SupplyAndDemand\\Entity.cpp",
+              "RelativeDocumentMoniker": "SupplyAndDemand\\Entity.cpp",
+              "ToolTip": "E:\\Development\\SupplyAndDemand\\SupplyAndDemand\\Entity.cpp",
+              "RelativeToolTip": "SupplyAndDemand\\Entity.cpp",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000677|",
+              "WhenOpened": "2025-12-18T07:10:35.342Z",
+              "EditorCaption": ""
             }
           ]
         },
