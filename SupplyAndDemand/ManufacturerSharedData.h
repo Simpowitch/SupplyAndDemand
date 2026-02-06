@@ -3,7 +3,8 @@
 
 struct ManufacturerSharedData
 {
-	GoodsType inputType;
+	float productionTime;
+	GoodsType inputType; //Unused if input is 0
 	int inputCount;
 	GoodsType outputType;
 	int outputCount;

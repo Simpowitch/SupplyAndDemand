@@ -3,20 +3,56 @@
   "WorkspaceRootPath": "E:\\Development\\SupplyAndDemand\\",
   "Documents": [
     {
-      "AbsoluteMoniker": "D:0:0:{F0210BE5-16D4-4A5B-B6DD-C5926DC3C63D}|SupplyAndDemand\\SupplyAndDemand.vcxproj|E:\\Development\\SupplyAndDemand\\SupplyAndDemand\\Transporter.h||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}",
-      "RelativeMoniker": "D:0:0:{F0210BE5-16D4-4A5B-B6DD-C5926DC3C63D}|SupplyAndDemand\\SupplyAndDemand.vcxproj|solutionrelative:SupplyAndDemand\\Transporter.h||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}"
+      "AbsoluteMoniker": "D:0:0:{F0210BE5-16D4-4A5B-B6DD-C5926DC3C63D}|SupplyAndDemand\\SupplyAndDemand.vcxproj|E:\\Development\\SupplyAndDemand\\SupplyAndDemand\\World.cpp||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}",
+      "RelativeMoniker": "D:0:0:{F0210BE5-16D4-4A5B-B6DD-C5926DC3C63D}|SupplyAndDemand\\SupplyAndDemand.vcxproj|solutionrelative:SupplyAndDemand\\World.cpp||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{F0210BE5-16D4-4A5B-B6DD-C5926DC3C63D}|SupplyAndDemand\\SupplyAndDemand.vcxproj|E:\\Development\\SupplyAndDemand\\SupplyAndDemand\\InputManager.cpp||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}",
-      "RelativeMoniker": "D:0:0:{F0210BE5-16D4-4A5B-B6DD-C5926DC3C63D}|SupplyAndDemand\\SupplyAndDemand.vcxproj|solutionrelative:SupplyAndDemand\\InputManager.cpp||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}"
+      "AbsoluteMoniker": "D:0:0:{F0210BE5-16D4-4A5B-B6DD-C5926DC3C63D}|SupplyAndDemand\\SupplyAndDemand.vcxproj|E:\\Development\\SupplyAndDemand\\SupplyAndDemand\\World.h||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}",
+      "RelativeMoniker": "D:0:0:{F0210BE5-16D4-4A5B-B6DD-C5926DC3C63D}|SupplyAndDemand\\SupplyAndDemand.vcxproj|solutionrelative:SupplyAndDemand\\World.h||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{F0210BE5-16D4-4A5B-B6DD-C5926DC3C63D}|SupplyAndDemand\\SupplyAndDemand.vcxproj|E:\\Development\\SupplyAndDemand\\SupplyAndDemand\\GameWorld.cpp||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}",
-      "RelativeMoniker": "D:0:0:{F0210BE5-16D4-4A5B-B6DD-C5926DC3C63D}|SupplyAndDemand\\SupplyAndDemand.vcxproj|solutionrelative:SupplyAndDemand\\GameWorld.cpp||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}"
+      "AbsoluteMoniker": "D:0:0:{F0210BE5-16D4-4A5B-B6DD-C5926DC3C63D}|SupplyAndDemand\\SupplyAndDemand.vcxproj|E:\\Development\\SupplyAndDemand\\SupplyAndDemand\\Factory_Manufacturer.cpp||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}",
+      "RelativeMoniker": "D:0:0:{F0210BE5-16D4-4A5B-B6DD-C5926DC3C63D}|SupplyAndDemand\\SupplyAndDemand.vcxproj|solutionrelative:SupplyAndDemand\\Factory_Manufacturer.cpp||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{F0210BE5-16D4-4A5B-B6DD-C5926DC3C63D}|SupplyAndDemand\\SupplyAndDemand.vcxproj|E:\\Development\\SupplyAndDemand\\SupplyAndDemand\\ManufacturerSharedData.h||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}",
+      "RelativeMoniker": "D:0:0:{F0210BE5-16D4-4A5B-B6DD-C5926DC3C63D}|SupplyAndDemand\\SupplyAndDemand.vcxproj|solutionrelative:SupplyAndDemand\\ManufacturerSharedData.h||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{F0210BE5-16D4-4A5B-B6DD-C5926DC3C63D}|SupplyAndDemand\\SupplyAndDemand.vcxproj|E:\\Development\\SupplyAndDemand\\SupplyAndDemand\\GoodsType.h||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}",
+      "RelativeMoniker": "D:0:0:{F0210BE5-16D4-4A5B-B6DD-C5926DC3C63D}|SupplyAndDemand\\SupplyAndDemand.vcxproj|solutionrelative:SupplyAndDemand\\GoodsType.h||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{F0210BE5-16D4-4A5B-B6DD-C5926DC3C63D}|SupplyAndDemand\\SupplyAndDemand.vcxproj|E:\\Development\\SupplyAndDemand\\SupplyAndDemand\\Factory_Manufacturer.h||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}",
+      "RelativeMoniker": "D:0:0:{F0210BE5-16D4-4A5B-B6DD-C5926DC3C63D}|SupplyAndDemand\\SupplyAndDemand.vcxproj|solutionrelative:SupplyAndDemand\\Factory_Manufacturer.h||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{F0210BE5-16D4-4A5B-B6DD-C5926DC3C63D}|SupplyAndDemand\\SupplyAndDemand.vcxproj|E:\\Development\\SupplyAndDemand\\SupplyAndDemand\\Manufacturer.cpp||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}",
+      "RelativeMoniker": "D:0:0:{F0210BE5-16D4-4A5B-B6DD-C5926DC3C63D}|SupplyAndDemand\\SupplyAndDemand.vcxproj|solutionrelative:SupplyAndDemand\\Manufacturer.cpp||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{F0210BE5-16D4-4A5B-B6DD-C5926DC3C63D}|SupplyAndDemand\\SupplyAndDemand.vcxproj|E:\\Development\\SupplyAndDemand\\SupplyAndDemand\\Manufacturer.h||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}",
+      "RelativeMoniker": "D:0:0:{F0210BE5-16D4-4A5B-B6DD-C5926DC3C63D}|SupplyAndDemand\\SupplyAndDemand.vcxproj|solutionrelative:SupplyAndDemand\\Manufacturer.h||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{F0210BE5-16D4-4A5B-B6DD-C5926DC3C63D}|SupplyAndDemand\\SupplyAndDemand.vcxproj|E:\\Development\\SupplyAndDemand\\SupplyAndDemand\\Factory_Type.cpp||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}",
+      "RelativeMoniker": "D:0:0:{F0210BE5-16D4-4A5B-B6DD-C5926DC3C63D}|SupplyAndDemand\\SupplyAndDemand.vcxproj|solutionrelative:SupplyAndDemand\\Factory_Type.cpp||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{F0210BE5-16D4-4A5B-B6DD-C5926DC3C63D}|SupplyAndDemand\\SupplyAndDemand.vcxproj|E:\\Development\\SupplyAndDemand\\SupplyAndDemand\\SupplyAndDemand.cpp||{8B382828-6202-11D1-8870-0000F87579D2}",
+      "RelativeMoniker": "D:0:0:{F0210BE5-16D4-4A5B-B6DD-C5926DC3C63D}|SupplyAndDemand\\SupplyAndDemand.vcxproj|solutionrelative:SupplyAndDemand\\SupplyAndDemand.cpp||{8B382828-6202-11D1-8870-0000F87579D2}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{F0210BE5-16D4-4A5B-B6DD-C5926DC3C63D}|SupplyAndDemand\\SupplyAndDemand.vcxproj|E:\\Development\\SupplyAndDemand\\SupplyAndDemand\\Entity.h||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}",
+      "RelativeMoniker": "D:0:0:{F0210BE5-16D4-4A5B-B6DD-C5926DC3C63D}|SupplyAndDemand\\SupplyAndDemand.vcxproj|solutionrelative:SupplyAndDemand\\Entity.h||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}"
     },
     {
       "AbsoluteMoniker": "D:0:0:{F0210BE5-16D4-4A5B-B6DD-C5926DC3C63D}|SupplyAndDemand\\SupplyAndDemand.vcxproj|E:\\Development\\SupplyAndDemand\\SupplyAndDemand\\Entity.cpp||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}",
       "RelativeMoniker": "D:0:0:{F0210BE5-16D4-4A5B-B6DD-C5926DC3C63D}|SupplyAndDemand\\SupplyAndDemand.vcxproj|solutionrelative:SupplyAndDemand\\Entity.cpp||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{F0210BE5-16D4-4A5B-B6DD-C5926DC3C63D}|SupplyAndDemand\\SupplyAndDemand.vcxproj|E:\\Development\\SupplyAndDemand\\SupplyAndDemand\\Transporter.h||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}",
+      "RelativeMoniker": "D:0:0:{F0210BE5-16D4-4A5B-B6DD-C5926DC3C63D}|SupplyAndDemand\\SupplyAndDemand.vcxproj|solutionrelative:SupplyAndDemand\\Transporter.h||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}"
     }
   ],
   "DocumentGroupContainers": [
@@ -26,8 +62,22 @@
       "DocumentGroups": [
         {
           "DockedWidth": 243,
-          "SelectedChildIndex": 25,
+          "SelectedChildIndex": 33,
           "Children": [
+            {
+              "$type": "Document",
+              "DocumentIndex": 9,
+              "Title": "SupplyAndDemand.cpp",
+              "DocumentMoniker": "E:\\Development\\SupplyAndDemand\\SupplyAndDemand\\SupplyAndDemand.cpp",
+              "RelativeDocumentMoniker": "SupplyAndDemand\\SupplyAndDemand.cpp",
+              "ToolTip": "E:\\Development\\SupplyAndDemand\\SupplyAndDemand\\SupplyAndDemand.cpp",
+              "RelativeToolTip": "SupplyAndDemand\\SupplyAndDemand.cpp",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAkAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000677|",
+              "WhenOpened": "2026-02-06T08:13:21.089Z",
+              "IsPinned": true,
+              "EditorCaption": ""
+            },
             {
               "$type": "Bookmark",
               "Name": "ST:140:0:{116d2292-e37d-41cd-a077-ebacac4c8cc4}"
@@ -130,52 +180,156 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 0,
+              "DocumentIndex": 4,
+              "Title": "GoodsType.h",
+              "DocumentMoniker": "E:\\Development\\SupplyAndDemand\\SupplyAndDemand\\GoodsType.h",
+              "RelativeDocumentMoniker": "SupplyAndDemand\\GoodsType.h",
+              "ToolTip": "E:\\Development\\SupplyAndDemand\\SupplyAndDemand\\GoodsType.h",
+              "RelativeToolTip": "SupplyAndDemand\\GoodsType.h",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAcAAAAGAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000680|",
+              "WhenOpened": "2026-02-06T11:32:40.725Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 2,
+              "Title": "Factory_Manufacturer.cpp",
+              "DocumentMoniker": "E:\\Development\\SupplyAndDemand\\SupplyAndDemand\\Factory_Manufacturer.cpp",
+              "RelativeDocumentMoniker": "SupplyAndDemand\\Factory_Manufacturer.cpp",
+              "ToolTip": "E:\\Development\\SupplyAndDemand\\SupplyAndDemand\\Factory_Manufacturer.cpp",
+              "RelativeToolTip": "SupplyAndDemand\\Factory_Manufacturer.cpp",
+              "ViewState": "AgIAABUAAAAAAAAAAAAAADgAAAAbAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000677|",
+              "WhenOpened": "2026-02-06T10:49:34.273Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 5,
+              "Title": "Factory_Manufacturer.h",
+              "DocumentMoniker": "E:\\Development\\SupplyAndDemand\\SupplyAndDemand\\Factory_Manufacturer.h",
+              "RelativeDocumentMoniker": "SupplyAndDemand\\Factory_Manufacturer.h",
+              "ToolTip": "E:\\Development\\SupplyAndDemand\\SupplyAndDemand\\Factory_Manufacturer.h",
+              "RelativeToolTip": "SupplyAndDemand\\Factory_Manufacturer.h",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAMAAAAbAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000680|",
+              "WhenOpened": "2026-02-06T10:47:31.132Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 6,
+              "Title": "Manufacturer.cpp",
+              "DocumentMoniker": "E:\\Development\\SupplyAndDemand\\SupplyAndDemand\\Manufacturer.cpp",
+              "RelativeDocumentMoniker": "SupplyAndDemand\\Manufacturer.cpp",
+              "ToolTip": "E:\\Development\\SupplyAndDemand\\SupplyAndDemand\\Manufacturer.cpp",
+              "RelativeToolTip": "SupplyAndDemand\\Manufacturer.cpp",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAsAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000677|",
+              "WhenOpened": "2026-02-06T10:20:04.592Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 10,
+              "Title": "Entity.h",
+              "DocumentMoniker": "E:\\Development\\SupplyAndDemand\\SupplyAndDemand\\Entity.h",
+              "RelativeDocumentMoniker": "SupplyAndDemand\\Entity.h",
+              "ToolTip": "E:\\Development\\SupplyAndDemand\\SupplyAndDemand\\Entity.h",
+              "RelativeToolTip": "SupplyAndDemand\\Entity.h",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAQAAAAJAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000680|",
+              "WhenOpened": "2026-02-06T10:22:45.23Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 12,
               "Title": "Transporter.h",
               "DocumentMoniker": "E:\\Development\\SupplyAndDemand\\SupplyAndDemand\\Transporter.h",
               "RelativeDocumentMoniker": "SupplyAndDemand\\Transporter.h",
               "ToolTip": "E:\\Development\\SupplyAndDemand\\SupplyAndDemand\\Transporter.h",
               "RelativeToolTip": "SupplyAndDemand\\Transporter.h",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAEAAAAAAAAAAAAAAA==",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAUAAAAAAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000680|",
               "WhenOpened": "2025-12-18T07:19:42.611Z",
               "EditorCaption": ""
             },
             {
               "$type": "Document",
-              "DocumentIndex": 1,
-              "Title": "InputManager.cpp",
-              "DocumentMoniker": "E:\\Development\\SupplyAndDemand\\SupplyAndDemand\\InputManager.cpp",
-              "RelativeDocumentMoniker": "SupplyAndDemand\\InputManager.cpp",
-              "ToolTip": "E:\\Development\\SupplyAndDemand\\SupplyAndDemand\\InputManager.cpp",
-              "RelativeToolTip": "SupplyAndDemand\\InputManager.cpp",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000677|",
-              "WhenOpened": "2025-12-18T07:10:37.837Z",
+              "DocumentIndex": 3,
+              "Title": "ManufacturerSharedData.h",
+              "DocumentMoniker": "E:\\Development\\SupplyAndDemand\\SupplyAndDemand\\ManufacturerSharedData.h",
+              "RelativeDocumentMoniker": "SupplyAndDemand\\ManufacturerSharedData.h",
+              "ToolTip": "E:\\Development\\SupplyAndDemand\\SupplyAndDemand\\ManufacturerSharedData.h",
+              "RelativeToolTip": "SupplyAndDemand\\ManufacturerSharedData.h",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAUAAAAVAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000680|",
+              "WhenOpened": "2026-02-06T10:39:38.289Z",
               "EditorCaption": ""
             },
             {
               "$type": "Document",
-              "DocumentIndex": 2,
-              "Title": "GameWorld.cpp",
-              "DocumentMoniker": "E:\\Development\\SupplyAndDemand\\SupplyAndDemand\\GameWorld.cpp",
-              "RelativeDocumentMoniker": "SupplyAndDemand\\GameWorld.cpp",
-              "ToolTip": "E:\\Development\\SupplyAndDemand\\SupplyAndDemand\\GameWorld.cpp",
-              "RelativeToolTip": "SupplyAndDemand\\GameWorld.cpp",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
+              "DocumentIndex": 0,
+              "Title": "World.cpp",
+              "DocumentMoniker": "E:\\Development\\SupplyAndDemand\\SupplyAndDemand\\World.cpp",
+              "RelativeDocumentMoniker": "SupplyAndDemand\\World.cpp",
+              "ToolTip": "E:\\Development\\SupplyAndDemand\\SupplyAndDemand\\World.cpp",
+              "RelativeToolTip": "SupplyAndDemand\\World.cpp",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAABAAAAAAAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000677|",
               "WhenOpened": "2025-12-18T07:10:37.073Z",
               "EditorCaption": ""
             },
             {
               "$type": "Document",
-              "DocumentIndex": 3,
+              "DocumentIndex": 1,
+              "Title": "World.h",
+              "DocumentMoniker": "E:\\Development\\SupplyAndDemand\\SupplyAndDemand\\World.h",
+              "RelativeDocumentMoniker": "SupplyAndDemand\\World.h",
+              "ToolTip": "E:\\Development\\SupplyAndDemand\\SupplyAndDemand\\World.h",
+              "RelativeToolTip": "SupplyAndDemand\\World.h",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAwAAAAIAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000680|",
+              "WhenOpened": "2026-02-06T11:14:52.476Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 7,
+              "Title": "Manufacturer.h",
+              "DocumentMoniker": "E:\\Development\\SupplyAndDemand\\SupplyAndDemand\\Manufacturer.h",
+              "RelativeDocumentMoniker": "SupplyAndDemand\\Manufacturer.h",
+              "ToolTip": "E:\\Development\\SupplyAndDemand\\SupplyAndDemand\\Manufacturer.h",
+              "RelativeToolTip": "SupplyAndDemand\\Manufacturer.h",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAQAAAASAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000680|",
+              "WhenOpened": "2026-02-06T10:20:19.71Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 8,
+              "Title": "Factory_Type.cpp",
+              "DocumentMoniker": "E:\\Development\\SupplyAndDemand\\SupplyAndDemand\\Factory_Type.cpp",
+              "RelativeDocumentMoniker": "SupplyAndDemand\\Factory_Type.cpp",
+              "ToolTip": "E:\\Development\\SupplyAndDemand\\SupplyAndDemand\\Factory_Type.cpp",
+              "RelativeToolTip": "SupplyAndDemand\\Factory_Type.cpp",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAgAAAAFAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000677|",
+              "WhenOpened": "2026-02-06T10:56:10.841Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 11,
               "Title": "Entity.cpp",
               "DocumentMoniker": "E:\\Development\\SupplyAndDemand\\SupplyAndDemand\\Entity.cpp",
               "RelativeDocumentMoniker": "SupplyAndDemand\\Entity.cpp",
               "ToolTip": "E:\\Development\\SupplyAndDemand\\SupplyAndDemand\\Entity.cpp",
               "RelativeToolTip": "SupplyAndDemand\\Entity.cpp",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAIAAAATAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000677|",
               "WhenOpened": "2025-12-18T07:10:35.342Z",
               "EditorCaption": ""

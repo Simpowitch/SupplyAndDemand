@@ -124,6 +124,9 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="Entity.cpp" />
+    <ClCompile Include="Factory_Manufacturer.cpp" />
+    <ClCompile Include="Factory_Type.cpp" />
+    <ClCompile Include="Timer.cpp" />
     <ClCompile Include="World.cpp" />
     <ClCompile Include="InputManager.cpp" />
     <ClCompile Include="Manufacturer.cpp" />
@@ -133,6 +136,8 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Entity.h" />
+    <ClInclude Include="Factory_Manufacturer.h" />
+    <ClInclude Include="Timer.h" />
     <ClInclude Include="World.h" />
     <ClInclude Include="GoodsType.h" />
     <ClInclude Include="InputManager.h" />
