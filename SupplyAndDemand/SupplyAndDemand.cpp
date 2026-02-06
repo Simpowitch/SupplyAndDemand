@@ -1,12 +1,12 @@
 #include "InputManager.h"
-#include "GameWorld.h"
+#include "World.h"
 
 int main()
 {
 	char ch = 0;
 
-	GameWorld gameWorld = {};
-	gameWorld.Init(100.0f, 100.0f, 10);
+	World world = {};
+	world.Init(100.0f, 100.0f, 10);
 
 	while (true)
 	{
@@ -15,7 +15,7 @@ int main()
 		if (key == 'q')
 			break;
 
-		gameWorld.Tick();
+		world.Tick();
 	}
 
 	return 0;
