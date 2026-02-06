@@ -2,7 +2,7 @@
 #include <vector>
 #include "Manufacturer.h"
 
-class GameWorld
+class World
 {
 public:
 	void Init(float aWidth, float aHeight, int aManufacturerCount);

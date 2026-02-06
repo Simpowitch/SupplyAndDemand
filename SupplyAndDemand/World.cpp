@@ -1,7 +1,7 @@
-#include "GameWorld.h"
+#include "World.h"
 #include <iostream>
 
-void GameWorld::Init(float aWidth, float aHeight, int aManufacturerCount)
+void World::Init(float aWidth, float aHeight, int aManufacturerCount)
 {
 	manufacturers.reserve(aManufacturerCount);
 	for (size_t i = 0; i < aManufacturerCount; i++)
@@ -10,7 +10,7 @@ void GameWorld::Init(float aWidth, float aHeight, int aManufacturerCount)
 	}
 }
 
-void GameWorld::Tick()
+void World::Tick()
 {
 	tickCount++;
 	std::cout << "Tick count: " << tickCount << std::endl;
