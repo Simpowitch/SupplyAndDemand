@@ -6,12 +6,28 @@ class Manufacturer : public Entity
 {
 public:
 	Manufacturer(ManufacturerSharedData* aSharedData);
-	void Update(const float deltaTime) override;
+	void Update(const float deltaTime, const float deltaHours) override;
+
+	ManufacturerSharedData* GetSharedData()
+	{
+		return sharedData;
+	}
+
+	float GetProductionProgress()
+	{
+		return productionProgress;
+	}
+
+	const char* inputName;
+	const char* outputName;
+
+	int outputStorage = 0;
+	int inputStorage = 0;
 
 private:
 	ManufacturerSharedData* sharedData;
 	float productionProgress = 0.f;
-	int outputStorage = 0;
-	int inputStorage = 0;
+	
+	bool CanProduce();
 };
 

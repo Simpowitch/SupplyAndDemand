@@ -2,7 +2,7 @@
 class Entity
 {
 public:
-	virtual void Update(const float deltaTime);
+	virtual void Update(const float deltaTime, const float deltaHours);
 
 private:
 	float xPos = 0.0f;

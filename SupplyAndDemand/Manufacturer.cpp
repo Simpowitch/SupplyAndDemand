@@ -1,22 +1,37 @@
 #include "Manufacturer.h"
-#include <iostream>
+#include "GoodsType.h"
 
-Manufacturer::Manufacturer(ManufacturerSharedData* aSharedData)
+Manufacturer::Manufacturer(ManufacturerSharedData* aSharedData) : 
+	sharedData(aSharedData),
+	inputName(TypeToString(aSharedData->inputType)),
+	outputName(TypeToString(aSharedData->outputType))
 {
-	sharedData = aSharedData;
+	
 }
 
-void Manufacturer::Update(const float deltaTime)
+void Manufacturer::Update(const float deltaTime, const float deltaHours)
 {
-	productionProgress += deltaTime;
-
-	if (productionProgress >= sharedData->productionTime)
+	Entity::Update(deltaTime, deltaHours);
+	if (CanProduce())
 	{
-		productionProgress -= sharedData->productionTime;
-		outputStorage += sharedData->outputCount;
-		inputStorage -= sharedData->inputCount;
-
-		std::cout << "Produced " << sharedData->outputCount << " of " << static_cast<int>(sharedData->outputType)
-			<< ", total output storage: " << outputStorage << "\n";
+		productionProgress += deltaHours;
+		if (productionProgress >= sharedData->productionTime)
+		{
+			productionProgress -= sharedData->productionTime;
+			outputStorage += sharedData->outputCount;
+			if (sharedData->inputType != GoodsType::Electricity)
+			{
+				inputStorage -= sharedData->inputCount;
+			}
+		}
 	}
+}
+
+bool Manufacturer::CanProduce()
+{
+	if (inputStorage < sharedData->inputCount)
+	{
+		return false;
+	}
+	return true;
 }

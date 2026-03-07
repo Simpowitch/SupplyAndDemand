@@ -8,3 +8,5 @@ enum class GoodsType
 	Coal,
 	RefinedGoods,
 };
+
+const char* TypeToString(GoodsType type);
