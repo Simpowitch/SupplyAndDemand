@@ -12,5 +12,5 @@ double Timer::Update()
 	auto current = high_resolution_clock::now();
 	auto duration = duration_cast<microseconds>(current - lastUpdate);
 	lastUpdate = current;
-	return duration.count() / 1'000'000.0f; // Convert microseconds to seconds
+	return duration.count() / 1'000'000.0; // Convert microseconds to seconds
 }

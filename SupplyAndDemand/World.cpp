@@ -19,7 +19,7 @@ void World::Update(const double deltaTime)
 {
 	system("cls");
 
-	float deltaHours = deltaTime / SECONDS_TO_HOURS;
+	double deltaHours = deltaTime / SECONDS_TO_HOURS;
 	clock += deltaHours;
 
 	for (size_t i = 0; i < manufacturers.size(); i++)
@@ -40,7 +40,7 @@ void World::Update(const double deltaTime)
 
 	
 
-	if (clock - hour >= 1.0f)
+	if (clock - hour >= 1.0)
 	{
 		hour++;
 		NewHour();

@@ -26,7 +26,7 @@ public:
 
 private:
 	ManufacturerSharedData* sharedData;
-	float productionProgress = 0.f;
+	double productionProgress = 0.;
 	
 	bool CanProduce();
 };

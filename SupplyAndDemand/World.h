@@ -11,7 +11,7 @@ public:
 
 private:
 	static constexpr float SECONDS_TO_HOURS = 1.0f;
-	float clock = 0;
+	double clock = 0;
 	int hour = 0;
 	Factory_Manufacturer manufacturerFactory{};
 	std::vector<Manufacturer> manufacturers;
