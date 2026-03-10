@@ -7,7 +7,7 @@ Timer::Timer() : lastUpdate(high_resolution_clock::now())
 	Update();
 }
 
-float Timer::Update()
+double Timer::Update()
 {
 	auto current = high_resolution_clock::now();
 	auto duration = duration_cast<microseconds>(current - lastUpdate);

@@ -15,7 +15,7 @@ void World::Init(float aWidth, float aHeight, int aManufacturerCount)
 	manufacturers.emplace_back(manufacturerFactory.CreateManufacturer(Factory_Type::Goods));
 }
 
-void World::Update(const float deltaTime)
+void World::Update(const double deltaTime)
 {
 	system("cls");
 

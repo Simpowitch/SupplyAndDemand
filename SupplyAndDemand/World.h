@@ -7,7 +7,7 @@ class World
 {
 public:
 	void Init(float width, float height, int manufacturerCount);
-	void Update(const float deltaTime);
+	void Update(const double deltaTime);
 
 private:
 	static constexpr float SECONDS_TO_HOURS = 1.0f;

@@ -6,7 +6,7 @@ class Manufacturer : public Entity
 {
 public:
 	Manufacturer(ManufacturerSharedData* aSharedData);
-	void Update(const float deltaTime, const float deltaHours) override;
+	void Update(const double deltaTime, const double deltaHours) override;
 
 	ManufacturerSharedData* GetSharedData()
 	{

@@ -5,7 +5,7 @@ class Timer
 {
 public:
 	Timer();
-	float Update();
+	double Update();
 
 private:
 	std::chrono::steady_clock::time_point lastUpdate;
