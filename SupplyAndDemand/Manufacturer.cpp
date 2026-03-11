@@ -12,6 +12,7 @@ Manufacturer::Manufacturer(ManufacturerSharedData* aSharedData) :
 void Manufacturer::Update(const double deltaTime, const double deltaHours)
 {
 	Entity::Update(deltaTime, deltaHours);
+
 	if (CanProduce())
 	{
 		productionProgress += deltaHours;

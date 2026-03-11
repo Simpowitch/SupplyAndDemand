@@ -1,18 +1,18 @@
 #include "World.h"
 #include <iostream>
 #include <stdlib.h>
+#include "Point.h"
 
 void World::Init(float aWidth, float aHeight, int aManufacturerCount)
 {
-	manufacturers.reserve(aManufacturerCount);
-	/*for (size_t i = 0; i < aManufacturerCount; i++)
-	{
-		manufacturers.emplace_back(manufacturerFactory.CreateManufacturer(Factory_Type::Mine_Minerals));
-	}*/
+	AddManufacturerOfType(Factory_Type::Electricity_Wind);
+	AddManufacturerOfType(Factory_Type::Mine_Minerals);
+	AddManufacturerOfType(Factory_Type::Goods);
+}
 
-	manufacturers.emplace_back(manufacturerFactory.CreateManufacturer(Factory_Type::Electricity_Wind));
-	manufacturers.emplace_back(manufacturerFactory.CreateManufacturer(Factory_Type::Mine_Minerals));
-	manufacturers.emplace_back(manufacturerFactory.CreateManufacturer(Factory_Type::Goods));
+void World::AddManufacturerOfType(Factory_Type type)
+{
+	manufacturers.push_back(manufacturerFactory.CreateManufacturer(type));
 }
 
 void World::Update(const double deltaTime)
@@ -25,6 +25,57 @@ void World::Update(const double deltaTime)
 	for (size_t i = 0; i < manufacturers.size(); i++)
 	{
 		manufacturers[i].Update(deltaTime, deltaHours);
+	}
+
+	for (size_t i = 0; i < transporters.size(); i++)
+	{
+		transporters[i].Update(deltaTime, deltaHours);
+	}
+
+	//Check if transports are needed
+	for (size_t i = 0; i < manufacturers.size(); i++)
+	{
+		if (manufacturers[i].CanProduce())
+		{
+			continue;
+		}
+
+		auto *requesterData = manufacturers[i].GetSharedData();
+		//There is a need for resources to be delivered
+		int need = manufacturers[i].GetInputNeed();
+		if (requesterData->inputType != GoodsType::Electricity && need > 0)
+		{
+			int bestIndex = -1;
+			float bestMagnitude = FLT_MAX;
+			for (size_t j = 0; j < manufacturers.size(); j++)
+			{
+				if (i == j)
+				{
+					continue;
+				}
+				auto* providerData = manufacturers[j].GetSharedData();
+				int available = manufacturers[j].GetAvailableOutput();
+				if (available > need)
+				{
+					auto sqrMagnitude = (manufacturers[i].GetPosition() - manufacturers[j].GetPosition()).SqrMagnitude();
+
+					if (sqrMagnitude < bestMagnitude)
+					{
+						bestIndex = j;
+						bestMagnitude = sqrMagnitude;
+					}
+				}
+			}
+
+			if (bestIndex != -1)
+			{
+				//Make pledge
+				int transportCount = manufacturers[bestIndex].GetAvailableOutput();
+				manufacturers[i].pledgedDeliveryInput += transportCount;
+				manufacturers[bestIndex].pledgedDeliveryOutput += transportCount;
+				CreateTransportRoute(bestIndex, i, requesterData->inputType, transportCount);
+			}
+		}
 	}
 
 	//Print state
@@ -57,6 +108,11 @@ void World::Update(const double deltaTime)
 	std::cout << "-------------------" << std::endl;
 	std::cout << "Clock: " << clock << std::endl;
 	std::cout << "Hour: " << hour << std::endl;
+}
+
+Manufacturer World::GetManufacturer(int index)
+{
+	return manufacturers[index];
 }
 
 void World::NewHour()
@@ -100,4 +156,34 @@ void World::NewHour()
 			}
 		}
 	}
+}
+
+void World::CreateTransportRoute(int from, int to, GoodsType type, int transportCount)
+{
+	int transportIndex = -1;
+
+	for (size_t i = 0; i < transporters.size(); i++)
+	{
+		if (transporters[i].isActive)
+		{
+			continue;
+		}
+		transportIndex = 0;
+	}
+
+	if (transportIndex == -1)
+	{
+		transporters.push_back(Transporter(100));
+		transportIndex = transporters.size() - 1;
+	}
+	
+	HaulJob job;
+	job.fromId = from;
+	job.fromPoint = manufacturers[from].GetPosition();
+	job.toId = to;
+	job.toPoint = manufacturers[to].GetPosition();
+	job.count = transportCount;
+	job.type = type;
+	
+	transporters[transportIndex].SetJob(job);
 }

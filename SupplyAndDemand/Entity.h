@@ -1,11 +1,15 @@
 #pragma once
+#include "Point.h"
+
 class Entity
 {
 public:
 	virtual void Update(const double deltaTime, const double deltaHours);
-
-private:
-	float xPos = 0.0f;
-	float yPos = 0.0f;
+	Point GetPosition() const
+	{
+		return position;
+	}
+protected:
+	Point position;
 };
 
