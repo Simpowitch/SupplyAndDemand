@@ -1,9 +1,15 @@
 #include "World.h"
 #include <iostream>
 #include <stdlib.h>
-#include "Point.h"
+#include "Float2.h"
 
-void World::Init(float aWidth, float aHeight, int aManufacturerCount)
+World::World(float width, float height) :
+	size(width, height)
+{
+
+}
+
+void World::Init()
 {
 	AddManufacturerOfType(Factory_Type::Electricity_Wind);
 	AddManufacturerOfType(Factory_Type::Mine_Minerals);
@@ -12,7 +18,7 @@ void World::Init(float aWidth, float aHeight, int aManufacturerCount)
 
 void World::AddManufacturerOfType(Factory_Type type)
 {
-	manufacturers.push_back(manufacturerFactory.CreateManufacturer(type));
+	manufacturers.push_back(manufacturerFactory.CreateManufacturer(size * 0.5f, type));
 }
 
 void World::Update(const double deltaTime)
@@ -24,12 +30,12 @@ void World::Update(const double deltaTime)
 
 	for (size_t i = 0; i < manufacturers.size(); i++)
 	{
-		manufacturers[i].Update(deltaTime, deltaHours);
+		manufacturers[i].Update(*this, deltaTime, deltaHours);
 	}
 
 	for (size_t i = 0; i < transporters.size(); i++)
 	{
-		transporters[i].Update(deltaTime, deltaHours);
+		transporters[i].Update(*this, deltaTime, deltaHours);
 	}
 
 	//Check if transports are needed
@@ -54,6 +60,10 @@ void World::Update(const double deltaTime)
 					continue;
 				}
 				auto* providerData = manufacturers[j].GetSharedData();
+				if (providerData->outputType != requesterData->inputType)
+				{
+					continue;
+				}
 				int available = manufacturers[j].GetAvailableOutput();
 				if (available > need)
 				{
@@ -89,7 +99,13 @@ void World::Update(const double deltaTime)
 		std::cout << "-------------------" << std::endl;
 	}
 
-	
+	for (size_t i = 0; i < transporters.size(); i++)
+	{
+		std::cout << "Tramsporter (" << i << ")" << std::endl;
+		auto position = transporters[i].GetPosition();
+		std::cout << "-Position: " << position.x << " " << position.y << std::endl;
+		std::cout << "-------------------" << std::endl;
+	}
 
 	if (clock - hour >= 1.0)
 	{
@@ -110,7 +126,7 @@ void World::Update(const double deltaTime)
 	std::cout << "Hour: " << hour << std::endl;
 }
 
-Manufacturer World::GetManufacturer(int index)
+Manufacturer& World::GetManufacturer(int index)
 {
 	return manufacturers[index];
 }
@@ -164,7 +180,7 @@ void World::CreateTransportRoute(int from, int to, GoodsType type, int transport
 
 	for (size_t i = 0; i < transporters.size(); i++)
 	{
-		if (transporters[i].isActive)
+		if (transporters[i].GetCurrentStatus() != Status::Inactive)
 		{
 			continue;
 		}
@@ -173,15 +189,15 @@ void World::CreateTransportRoute(int from, int to, GoodsType type, int transport
 
 	if (transportIndex == -1)
 	{
-		transporters.push_back(Transporter(100));
+		transporters.push_back(Transporter(Float2{0.0f, 0.0f}, 70));
 		transportIndex = transporters.size() - 1;
 	}
 	
 	HaulJob job;
-	job.fromId = from;
-	job.fromPoint = manufacturers[from].GetPosition();
-	job.toId = to;
-	job.toPoint = manufacturers[to].GetPosition();
+	job.pickupId = from;
+	job.pickupPoint = manufacturers[from].GetPosition();
+	job.deliveryId = to;
+	job.deliveryPoint = manufacturers[to].GetPosition();
 	job.count = transportCount;
 	job.type = type;
 	

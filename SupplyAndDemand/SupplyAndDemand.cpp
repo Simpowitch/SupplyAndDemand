@@ -8,8 +8,8 @@ int main()
 {
 	char ch = 0;
 
-	World world;
-	world.Init(100.0f, 100.0f, 10);
+	World world(100.0f, 100.0f);
+	world.Init();
 
 	InputManager inputManager;
 	Timer timer;

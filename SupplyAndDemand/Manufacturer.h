@@ -5,8 +5,8 @@
 class Manufacturer : public Entity
 {
 public:
-	Manufacturer(ManufacturerSharedData* aSharedData);
-	void Update(const double deltaTime, const double deltaHours) override;
+	Manufacturer(Float2 position, ManufacturerSharedData* aSharedData);
+	void Update(World& world, const double deltaTime, const double deltaHours) override;
 	bool CanProduce();
 
 	ManufacturerSharedData* GetSharedData() const

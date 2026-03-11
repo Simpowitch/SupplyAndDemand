@@ -63,7 +63,7 @@ Factory_Manufacturer::Factory_Manufacturer()
 	}
 }
 
-Manufacturer Factory_Manufacturer::CreateManufacturer(const Factory_Type type)
+Manufacturer Factory_Manufacturer::CreateManufacturer(Float2 position, const Factory_Type type)
 {
-	return Manufacturer(&sharedData[static_cast<int>(type)]);
+	return Manufacturer(position, &sharedData[static_cast<int>(type)]);
 }

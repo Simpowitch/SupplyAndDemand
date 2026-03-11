@@ -1,40 +1,92 @@
 #include "Transporter.h"
+#include "World.h"
 
-Transporter::Transporter(float speed) : 
+Transporter::Transporter(Float2 position, float speed) : 
+	Entity(position),
 	mySpeed(speed)
 {
 
 }
 
-void Transporter::Update(const double deltaTime, const double deltaHours)
+void Transporter::Update(World& world, const double deltaTime, const double deltaHours)
 {
-	Entity::Update(deltaTime, deltaHours);
-	//TODO: Travel to the first point first, then the second
-
-	if (isActive)
+	switch (currentStatus)
 	{
-
-		Point movement = currentJob.toPoint - position;
-
-		if (movement.SqrMagnitude() > 1.0f)
+	case Status::Inactive:
+		break;
+	case Status::Pickup:
+	{
+		Float2 direction = currentJob.pickupPoint - position;
+		if (HasReachedDestination(direction))
 		{
-			movement.Normalize();
-			movement *= mySpeed;
-			position += movement;
+			//Do pickup
+			Manufacturer& manufacturer = world.GetManufacturer(currentJob.pickupId);
+
+			int moveCount = currentJob.count;
+			
+			goodsCount += moveCount;
+			manufacturer.outputStorage -= moveCount;
+			manufacturer.pledgedDeliveryOutput -= moveCount;
+			currentStatus = Status::Delivery;
 		}
 		else
 		{
-			isActive = false;
-
-			//TODO: Deliver goods
+			MoveTowards(direction, deltaHours);
 		}
+		break;
 	}
+	case Status::Delivery:
+	{
+		Float2 direction = currentJob.deliveryPoint - position;
+		if (HasReachedDestination(direction))
+		{
+			//Do delivery
+			Manufacturer& manufacturer = world.GetManufacturer(currentJob.deliveryId);
+
+			int moveCount = goodsCount; //Extra safety in case we later want to clamp this moveCount
+
+			manufacturer.inputStorage += moveCount;
+			goodsCount -= moveCount;
+			manufacturer.pledgedDeliveryInput -= moveCount;
+
+			currentStatus = Status::Inactive;
+		}
+		else
+		{
+			MoveTowards(direction, deltaHours);
+		}
+		break;
+	}
+	default:
+		break;
+	}
+}
+
+bool Transporter::HasReachedDestination(const Float2& distance) const
+{
+	return distance.SqrMagnitude() < 1.0f;
+}
+
+void Transporter::MoveTowards(const Float2& direction, const float deltaHours)
+{
+	Float2 movement = direction;
+	movement.Normalize();
+	movement *= mySpeed * deltaHours;
+	if (movement.SqrMagnitude() > direction.SqrMagnitude())
+	{
+		movement = direction;
+	}
+	position += movement;
 }
 
 void Transporter::SetJob(const HaulJob& job)
 {
 	currentJob = job;
-	isActive = true;
-	//TODO: Pickup goods
+	currentStatus = Status::Pickup;
 
+	if (currentJob.type != goodsType)
+	{
+		goodsType = currentJob.type;
+		goodsCount = 0;
+	}
 }

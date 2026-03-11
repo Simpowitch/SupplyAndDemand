@@ -3,18 +3,34 @@
 #include "Entity.h"
 #include "HaulJob.h"
 
+enum class Status
+{
+	Inactive,
+	Pickup,
+	Delivery
+};
 
 class Transporter : public Entity
 {
 public:
-	Transporter(float speed);
-	void Update(const double deltaTime, const double deltaHours) override;
+	Transporter(Float2 position, float speed);
+	void Update(World& world, const double deltaTime, const double deltaHours) override;
+	bool HasReachedDestination(const Float2& movement) const;
+	void MoveTowards(const Float2& movement, const float deltaHours);
 	void SetJob(const HaulJob& job);
 	
-	bool isActive = false;
+	Status GetCurrentStatus()
+	{
+		return currentStatus;
+	}
 
 private: 
 	float mySpeed;
 	HaulJob currentJob;
+	Status currentStatus;
+	int goodsCount;
+	GoodsType goodsType;
 };
+
+
 

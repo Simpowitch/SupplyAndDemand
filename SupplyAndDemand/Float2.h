@@ -2,61 +2,61 @@
 
 #include <math.h>
 
-struct Point
+struct Float2
 {
 	float x;
 	float y;
 
-	Point() :
+	Float2() :
 		x(0),
 		y(0)
 	{
 
 	}
-	Point(float x, float y) :
+	Float2(float x, float y) :
 		x(x),
 		y(y)
 	{
 
 	}
 
-	Point operator+(const Point& p)
+	Float2 operator+(const Float2& p) const
 	{
-		return Point(x + p.x, y + p.y);
+		return Float2(x + p.x, y + p.y);
 	}
 
-	Point operator+=(const Point& p)
+	Float2 operator+=(const Float2& p)
 	{
 		x += p.x;
 		y += p.y;
 		return *this;
 	}
 
-	Point operator-(const Point& p)
+	Float2 operator-(const Float2& p) const
 	{
-		return Point(x - p.x, y - p.y);
+		return Float2(x - p.x, y - p.y);
 	}
 
-	Point operator-=(const Point& p)
+	Float2 operator-=(const Float2& p)
 	{
 		x -= p.x;
 		y -= p.y;
 		return *this;
 	}
 
-	Point operator*(float m)
+	Float2 operator*(float m) const
 	{
-		return Point(x * m, y * m);
+		return Float2(x * m, y * m);
 	}
 
-	Point operator*=(float m)
+	Float2 operator*=(float m)
 	{
 		x *= m;
 		y *= m;
 		return *this;
 	}
 	
-	float SqrMagnitude()
+	float SqrMagnitude() const
 	{
 		return x * x + y * y;
 	}

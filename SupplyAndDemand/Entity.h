@@ -1,15 +1,18 @@
 #pragma once
-#include "Point.h"
+#include "Float2.h"
+
+class World;
 
 class Entity
 {
 public:
-	virtual void Update(const double deltaTime, const double deltaHours);
-	Point GetPosition() const
+	Entity(Float2 position);
+	virtual void Update(World& world, const double deltaTime, const double deltaHours) = 0;
+	Float2 GetPosition() const
 	{
 		return position;
 	}
 protected:
-	Point position;
+	Float2 position;
 };
 

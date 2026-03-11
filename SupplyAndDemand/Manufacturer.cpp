@@ -1,7 +1,8 @@
 #include "Manufacturer.h"
 #include "GoodsType.h"
 
-Manufacturer::Manufacturer(ManufacturerSharedData* aSharedData) : 
+Manufacturer::Manufacturer(Float2 position, ManufacturerSharedData* aSharedData) : 
+	Entity(position),
 	sharedData(aSharedData),
 	inputName(TypeToString(aSharedData->inputType)),
 	outputName(TypeToString(aSharedData->outputType))
@@ -9,10 +10,8 @@ Manufacturer::Manufacturer(ManufacturerSharedData* aSharedData) :
 	
 }
 
-void Manufacturer::Update(const double deltaTime, const double deltaHours)
+void Manufacturer::Update(World& world, const double deltaTime, const double deltaHours)
 {
-	Entity::Update(deltaTime, deltaHours);
-
 	if (CanProduce())
 	{
 		productionProgress += deltaHours;

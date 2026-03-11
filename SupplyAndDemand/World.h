@@ -7,12 +7,14 @@
 class World
 {
 public:
-	void Init(float width, float height, int manufacturerCount);
+	World(float width, float height);
+	void Init();
 	void AddManufacturerOfType(Factory_Type type);
 	void Update(const double deltaTime);
-	Manufacturer GetManufacturer(int index);
+	Manufacturer& GetManufacturer(int index);
 
 private:
+	Float2 size;
 	static constexpr float SECONDS_TO_HOURS = 1.0f;
 	double clock = 0;
 	int hour = 0;
