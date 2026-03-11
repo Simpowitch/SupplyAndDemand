@@ -8,7 +8,7 @@ int main()
 {
 	char ch = 0;
 
-	World world(100.0f, 100.0f);
+	World world(500.0f, 1500.0f);
 	world.Init();
 
 	InputManager inputManager;

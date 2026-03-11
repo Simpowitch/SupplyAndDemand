@@ -2,6 +2,7 @@
 #include <iostream>
 #include <stdlib.h>
 #include "Float2.h"
+#include "RNG.h"
 
 World::World(float width, float height) :
 	size(width, height)
@@ -18,7 +19,7 @@ void World::Init()
 
 void World::AddManufacturerOfType(Factory_Type type)
 {
-	manufacturers.push_back(manufacturerFactory.CreateManufacturer(size * 0.5f, type));
+	manufacturers.push_back(manufacturerFactory.CreateManufacturer(Float2(GetRandomInt(0, size.x), GetRandomInt(0, size.y)), type));
 }
 
 void World::Update(const double deltaTime)
@@ -93,6 +94,8 @@ void World::Update(const double deltaTime)
 	{
 		auto* data = manufacturers[i].GetSharedData();
 		std::cout << "Manufacturer (" << i << ")" << std::endl;
+		auto position = manufacturers[i].GetPosition();
+		std::cout << "-Position: " << position.x << " " << position.y << std::endl;
 		std::cout << "-Progress:" << manufacturers[i].GetProductionProgress() << std::endl;
 		std::cout << "-Input storage:" << manufacturers[i].inputName << " " << manufacturers[i].inputStorage << std::endl;
 		std::cout << "-Output storage:" << manufacturers[i].outputName << " " << manufacturers[i].outputStorage << std::endl;

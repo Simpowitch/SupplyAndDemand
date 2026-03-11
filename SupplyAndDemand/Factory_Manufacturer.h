@@ -1,7 +1,7 @@
 #pragma once
 #include "ManufacturerSharedData.h"
 #include "Manufacturer.h"
-#include "Factory_Type.cpp"
+#include "Factory_Type.h"
 #include <array>
 
 class Factory_Manufacturer
