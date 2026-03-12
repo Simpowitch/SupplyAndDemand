@@ -24,10 +24,23 @@ void World::AddManufacturerOfType(Factory_Type type)
 
 void World::Update(const double deltaTime)
 {
-	system("cls");
-
 	double deltaHours = deltaTime / SECONDS_TO_HOURS;
 	clock += deltaHours;
+
+	if (clock - hour >= 1.0)
+	{
+		hour++;
+		NewHour();
+		if (hour >= 24)
+		{
+			hour = 0;
+		}
+	}
+	if (clock >= 24)
+	{
+		clock -= 24;
+	}
+
 
 	for (size_t i = 0; i < manufacturers.size(); i++)
 	{
@@ -89,7 +102,11 @@ void World::Update(const double deltaTime)
 		}
 	}
 
+
+
 	//Print state
+	system("cls");
+	std::cout << "-Manufacturers-" << std::endl;
 	for (size_t i = 0; i < manufacturers.size(); i++)
 	{
 		auto* data = manufacturers[i].GetSharedData();
@@ -102,29 +119,23 @@ void World::Update(const double deltaTime)
 		std::cout << "-------------------" << std::endl;
 	}
 
+	std::cout << "-Transporters-" << std::endl;
 	for (size_t i = 0; i < transporters.size(); i++)
 	{
-		std::cout << "Tramsporter (" << i << ")" << std::endl;
-		auto position = transporters[i].GetPosition();
+		const Transporter& transporter = transporters[i];
+		std::cout << "Transporter (" << i << ")" << std::endl;
+		auto position = transporter.GetPosition();
 		std::cout << "-Position: " << position.x << " " << position.y << std::endl;
+		std::cout << "-State: " << ToString(transporter.GetCurrentStatus()) << std::endl;
+		const HaulJob job = transporter.GetJob();
+		std::cout << "-Last/Current Job: " << "Delivering " << ToString(job.type) << " x" << job.count << " from " << job.pickupId << " to " << job.deliveryId << std::endl;
+		std::cout << "-Cargo: " << ToString(transporter.GetGoodsType()) << " x" << transporter.GetGoodsCount() << std::endl;
+		std::cout << "-Speed: " << transporter.GetSpeed() << std::endl;
 		std::cout << "-------------------" << std::endl;
 	}
 
-	if (clock - hour >= 1.0)
-	{
-		hour++;
-		NewHour();
-		if (hour >= 24)
-		{
-			hour = 0;
-		}
-	}
-	if (clock >= 24)
-	{
-		clock -= 24;
-	}
-
-	std::cout << "-------------------" << std::endl;
+	
+	std::cout << "-Time-" << std::endl;
 	std::cout << "Clock: " << clock << std::endl;
 	std::cout << "Hour: " << hour << std::endl;
 }

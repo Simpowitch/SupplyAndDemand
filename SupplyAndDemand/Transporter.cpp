@@ -90,3 +90,18 @@ void Transporter::SetJob(const HaulJob& job)
 		goodsCount = 0;
 	}
 }
+
+const char* ToString(Status status)
+{
+	switch (status)
+	{
+	case Status::Inactive:
+		return "Inactive";
+	case Status::Pickup:
+		return "Pickup";
+	case Status::Delivery:
+		return "Delivery";
+	default:
+		return "Undefined string";
+	}
+}

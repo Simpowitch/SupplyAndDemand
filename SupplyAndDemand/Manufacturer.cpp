@@ -4,8 +4,8 @@
 Manufacturer::Manufacturer(Float2 position, ManufacturerSharedData* aSharedData) : 
 	Entity(position),
 	sharedData(aSharedData),
-	inputName(TypeToString(aSharedData->inputType)),
-	outputName(TypeToString(aSharedData->outputType))
+	inputName(ToString(aSharedData->inputType)),
+	outputName(ToString(aSharedData->outputType))
 {
 	
 }

@@ -7,8 +7,11 @@ enum class Status
 {
 	Inactive,
 	Pickup,
-	Delivery
+	Delivery,
 };
+
+const char* ToString(Status status);
+
 
 class Transporter : public Entity
 {
@@ -19,10 +22,11 @@ public:
 	void MoveTowards(const Float2& movement, const float deltaHours);
 	void SetJob(const HaulJob& job);
 	
-	Status GetCurrentStatus()
-	{
-		return currentStatus;
-	}
+	HaulJob GetJob() const { return currentJob; }
+	Status GetCurrentStatus() const { return currentStatus; }
+	GoodsType GetGoodsType() const { return goodsType; }
+	int GetGoodsCount() const { return goodsCount; }
+	int GetSpeed() const { return mySpeed; }
 
 private: 
 	float mySpeed;

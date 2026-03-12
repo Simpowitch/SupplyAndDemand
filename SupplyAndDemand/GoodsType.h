@@ -9,4 +9,4 @@ enum class GoodsType
 	RefinedGoods,
 };
 
-const char* TypeToString(GoodsType type);
+const char* ToString(GoodsType type);

@@ -1,6 +1,6 @@
 #include "GoodsType.h"
 
-const char* TypeToString(GoodsType type)
+const char* ToString(GoodsType type)
 {
 	switch (type)
 	{
