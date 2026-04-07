@@ -102,6 +102,8 @@
       <SDLCheck>true</SDLCheck>
       <PreprocessorDefinitions>_DEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
+      <LanguageStandard>stdcpp17</LanguageStandard>
+      <AdditionalIncludeDirectories>$(ProjectDir)\include</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
@@ -116,6 +118,8 @@
       <SDLCheck>true</SDLCheck>
       <PreprocessorDefinitions>NDEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
+      <LanguageStandard>stdcpp17</LanguageStandard>
+      <AdditionalIncludeDirectories>$(ProjectDir)\include</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
@@ -127,6 +131,7 @@
     <ClCompile Include="Factory_Manufacturer.cpp" />
     <ClCompile Include="Factory_Type.h" />
     <ClCompile Include="GoodsType.cpp" />
+    <ClCompile Include="Settings.cpp" />
     <ClCompile Include="Timer.cpp" />
     <ClCompile Include="World.cpp" />
     <ClCompile Include="InputManager.cpp" />
@@ -138,9 +143,13 @@
   <ItemGroup>
     <ClInclude Include="Entity.h" />
     <ClInclude Include="Factory_Manufacturer.h" />
+    <ClInclude Include="Goods.h" />
+    <ClInclude Include="Database.h" />
     <ClInclude Include="HaulJob.h" />
     <ClInclude Include="Float2.h" />
+    <ClInclude Include="Recipe.h" />
     <ClInclude Include="RNG.h" />
+    <ClInclude Include="Settings.h" />
     <ClInclude Include="Timer.h" />
     <ClInclude Include="World.h" />
     <ClInclude Include="GoodsType.h" />

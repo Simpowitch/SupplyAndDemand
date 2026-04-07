@@ -3,10 +3,11 @@
 #include <iostream>
 #include <Windows.h>
 #include "Timer.h"
+#include "Settings.h"
 
 int main()
 {
-	char ch = 0;
+	LoadSettings();
 
 	World world(500.0f, 1500.0f);
 	world.Init();

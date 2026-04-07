@@ -7,11 +7,14 @@
 World::World(float width, float height) :
 	size(width, height)
 {
-
+	
 }
 
 void World::Init()
 {
+	goodsDatabase.Load("resources/goods");
+	recipeDatabase.Load("resources/recipes");
+
 	AddManufacturerOfType(Factory_Type::Electricity_Wind);
 	AddManufacturerOfType(Factory_Type::Mine_Minerals);
 	AddManufacturerOfType(Factory_Type::Goods);

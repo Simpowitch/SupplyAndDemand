@@ -3,6 +3,9 @@
 #include "Manufacturer.h"
 #include "Factory_Manufacturer.h"
 #include "Transporter.h"
+#include "Database.h"
+#include "Goods.h"
+#include "Recipe.h"
 
 class World
 {
@@ -14,6 +17,9 @@ public:
 	Manufacturer& GetManufacturer(int index);
 
 private:
+	Database<Goods> goodsDatabase;
+	Database<Recipe> recipeDatabase;
+	
 	Float2 size;
 	static constexpr float SECONDS_TO_HOURS = 1.0f;
 	double clock = 0;
