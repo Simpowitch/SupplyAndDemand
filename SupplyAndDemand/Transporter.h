@@ -24,7 +24,7 @@ public:
 	
 	HaulJob GetJob() const { return currentJob; }
 	Status GetCurrentStatus() const { return currentStatus; }
-	int GetGoodsId() const { return cargo.goodsId; }
+	uint64_t GetGoodsId() const { return cargo.goodsId; }
 	int GetGoodsCount() const { return cargo.count; }
 	int GetSpeed() const { return mySpeed; }
 

@@ -19,9 +19,9 @@ void World::Init()
 	AddManufacturerOfType("wheat_farm");
 	AddManufacturerOfType("flour_mill");
 	AddManufacturerOfType("bakery");
-	//AddManufacturerOfType("iron_mine");
-	//AddManufacturerOfType("coal_mine");
-	//AddManufacturerOfType("steel_factory");
+	AddManufacturerOfType("iron_mine");
+	AddManufacturerOfType("coal_mine");
+	AddManufacturerOfType("steel_factory");
 }
 
 void World::AddManufacturerOfType(std::string type)
@@ -118,10 +118,11 @@ void World::Update(const double deltaTime)
 	for (size_t i = 0; i < manufacturers.size(); i++)
 	{
 		const auto* data = manufacturers[i].GetSharedData();
-		std::cout << data->name << std::endl;
+		std::cout << "(" << i << ") " << data->name << std::endl;
 		const auto position = manufacturers[i].GetPosition();
 		std::cout << "-Position: " << position.x << " " << position.y << std::endl;
 		std::cout << "-Progress:" << manufacturers[i].GetProductionProgress() << std::endl;
+		std::cout << "-Has Power: " << manufacturers[i].GetPowerState() << std::endl;
 		std::cout << "-Storage-" << std::endl;
 		const auto& storage = manufacturers[i].GetStorage();
 		for(const auto& storageElement : storage)
@@ -144,7 +145,7 @@ void World::Update(const double deltaTime)
 		const HaulJob job = transporter.GetJob();
 		auto goods = goodsDatabase.TryGetElement(job.goodsId);
 		std::string name = goods == nullptr ? "Unknown" : goods->name;
-		std::cout << "-Last/Current Job: " << "Delivering " << name << " x" << job.count << " from " << job.pickupId << " to " << job.deliveryId << std::endl;
+		std::cout << "-Last/Current Job: " << "Delivering " << name << " x" << job.count << " from #" << job.pickupId << " to #" << job.deliveryId << std::endl;
 		goods = goodsDatabase.TryGetElement(transporter.GetGoodsId());
 		name = goods == nullptr ? "Unknown" : goods->name;
 		std::cout << "-Cargo: " << name << " x" << transporter.GetGoodsCount() << std::endl;
@@ -152,6 +153,7 @@ void World::Update(const double deltaTime)
 		std::cout << "-------------------" << std::endl;
 	}
 
+	std::cout << "Power balance: " << currentPowerBalance << std::endl;
 
 	std::cout << "-Time-" << std::endl;
 	std::cout << "Clock: " << clock << std::endl;
@@ -165,12 +167,12 @@ Manufacturer& World::GetManufacturer(int index)
 
 void World::NewHour()
 {
+	currentPowerBalance = 0;
 	int electricityAvailable = 0;
 
-	//Remove electricity
+	//Collect electricity
 	for (auto& manufacturer : manufacturers)
 	{
-		manufacturer.SetPowerState(false);
 		electricityAvailable += manufacturer.GetOutputPower();
 		manufacturer.ClearOutputPower();
 	}
@@ -184,7 +186,14 @@ void World::NewHour()
 			electricityAvailable -= powerConsumption;
 			manufacturer.SetPowerState(true);
 		}
+		else
+		{
+			currentPowerBalance -= powerConsumption;
+			manufacturer.SetPowerState(false);
+		}
 	}
+
+	currentPowerBalance += electricityAvailable;
 }
 
 void World::CreateTransportRoute(int from, int to, uint64_t type, int transportCount)
@@ -197,7 +206,8 @@ void World::CreateTransportRoute(int from, int to, uint64_t type, int transportC
 		{
 			continue;
 		}
-		transportIndex = 0;
+		transportIndex = i;
+		break;
 	}
 
 	if (transportIndex == -1)

@@ -39,6 +39,7 @@ public:
 		outputPower = 0;
 	}
 	void SetPowerState(bool newState);
+	bool GetPowerState() const { return isPowered; }
 
 private:
 	const ManufacturerSharedData* sharedData;

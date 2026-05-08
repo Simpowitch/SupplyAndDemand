@@ -25,6 +25,7 @@ private:
 	Factory_Manufacturer manufacturerFactory{};
 	std::vector<Manufacturer> manufacturers;
 	std::vector<Transporter> transporters;
+	int currentPowerBalance = 0;
 
 	void NewHour();
 	void CreateTransportRoute(int from, int to, uint64_t type, int transportCount);
