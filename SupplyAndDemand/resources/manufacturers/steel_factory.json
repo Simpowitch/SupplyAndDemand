@@ -1,0 +1,25 @@
+{
+  "id":  "steel_factory",
+  "name": "Steel Factory",
+  "recipe": {
+    "inputs": [
+      {
+        "type": "iron",
+        "count": 1
+      },
+      {
+        "type": "coal",
+        "count": 1
+      }
+    ],
+    "outputs": [
+      {
+        "type": "steel",
+        "count": 1
+      }
+    ]
+  },
+  "production_time": 1.0,
+  "power_consumption": 100,
+  "power_production": 0
+}

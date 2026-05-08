@@ -22,11 +22,9 @@ void Transporter::Update(World& world, const double deltaTime, const double delt
 			//Do pickup
 			Manufacturer& manufacturer = world.GetManufacturer(currentJob.pickupId);
 
-			int moveCount = currentJob.count;
-			
-			goodsCount += moveCount;
-			manufacturer.outputStorage -= moveCount;
-			manufacturer.pledgedDeliveryOutput -= moveCount;
+			cargo.count += manufacturer.PerformPickup(currentJob.goodsId, currentJob.count);
+			manufacturer.RemovePickupPledge(currentJob.goodsId, currentJob.count);
+
 			currentStatus = Status::Delivery;
 		}
 		else
@@ -43,11 +41,8 @@ void Transporter::Update(World& world, const double deltaTime, const double delt
 			//Do delivery
 			Manufacturer& manufacturer = world.GetManufacturer(currentJob.deliveryId);
 
-			int moveCount = goodsCount; //Extra safety in case we later want to clamp this moveCount
-
-			manufacturer.inputStorage += moveCount;
-			goodsCount -= moveCount;
-			manufacturer.pledgedDeliveryInput -= moveCount;
+			cargo.count -= manufacturer.PerformDelivery(cargo.goodsId, cargo.count);
+			manufacturer.RemoveDeliveryPledge(currentJob.goodsId, currentJob.count);
 
 			currentStatus = Status::Inactive;
 		}
@@ -84,10 +79,10 @@ void Transporter::SetJob(const HaulJob& job)
 	currentJob = job;
 	currentStatus = Status::Pickup;
 
-	if (currentJob.type != goodsType)
+	if (currentJob.goodsId != cargo.goodsId)
 	{
-		goodsType = currentJob.type;
-		goodsCount = 0;
+		cargo.goodsId = currentJob.goodsId;
+		cargo.count = 0;
 	}
 }
 

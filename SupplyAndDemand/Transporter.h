@@ -24,16 +24,15 @@ public:
 	
 	HaulJob GetJob() const { return currentJob; }
 	Status GetCurrentStatus() const { return currentStatus; }
-	GoodsType GetGoodsType() const { return goodsType; }
-	int GetGoodsCount() const { return goodsCount; }
+	int GetGoodsId() const { return cargo.goodsId; }
+	int GetGoodsCount() const { return cargo.count; }
 	int GetSpeed() const { return mySpeed; }
 
 private: 
 	float mySpeed;
 	HaulJob currentJob;
-	Status currentStatus;
-	int goodsCount;
-	GoodsType goodsType;
+	Status currentStatus = Status::Inactive;
+	GoodsAmount cargo;
 };
 
 

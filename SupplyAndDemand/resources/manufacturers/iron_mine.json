@@ -1,0 +1,18 @@
+{
+  "id": "iron_mine",
+  "name": "Iron Mine",
+  "recipe": {
+    "inputs": [
+
+    ],
+    "outputs": [
+      {
+        "type": "iron",
+        "count": 1
+      }
+    ]
+  },
+  "production_time": 1.0,
+  "power_consumption": 10,
+  "power_production": 0
+}

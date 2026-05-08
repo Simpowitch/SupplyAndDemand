@@ -1,0 +1,17 @@
+{
+  "id": "coal_power_plant",
+  "name": "Coal Power Plant",
+  "recipe": {
+    "inputs": [
+      {
+        "type": "coal",
+        "count": 250
+      }
+    ],
+    "outputs": [
+    ]
+  },
+  "production_time": 1.0,
+  "power_consumption": 0,
+  "power_production": 500
+}

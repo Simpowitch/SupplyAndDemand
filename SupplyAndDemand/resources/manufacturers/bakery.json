@@ -1,0 +1,21 @@
+{
+  "id": "bakery",
+  "name": "Bakery",
+  "recipe": {
+    "inputs": [
+      {
+        "type": "flour",
+        "count": 10
+      }
+    ],
+    "outputs": [
+      {
+        "type": "bread",
+        "count": 20
+      }
+    ]
+  },
+  "production_time": 1.0,
+  "power_consumption": 10,
+  "power_production": 0
+}

@@ -1,15 +1,16 @@
 #pragma once
 #include "ManufacturerSharedData.h"
 #include "Manufacturer.h"
-#include "Factory_Type.h"
 #include <array>
+#include "Database.h"
+#include <string>
 
 class Factory_Manufacturer
 {
 public:
 	Factory_Manufacturer();
-	Manufacturer CreateManufacturer(Float2 position, const Factory_Type type);
+	Manufacturer CreateManufacturer(Float2 position, const std::string& typeName);
 
 private:
-	std::array<ManufacturerSharedData, static_cast<int>(Factory_Type::MAX)> sharedData;
+	Database<ManufacturerSharedData> sharedData;
 };

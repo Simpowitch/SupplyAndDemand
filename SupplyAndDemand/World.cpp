@@ -3,24 +3,28 @@
 #include <stdlib.h>
 #include "Float2.h"
 #include "RNG.h"
+#include <string>
 
 World::World(float width, float height) :
 	size(width, height)
 {
-	
+
 }
 
 void World::Init()
 {
 	goodsDatabase.Load("resources/goods");
-	recipeDatabase.Load("resources/recipes");
 
-	AddManufacturerOfType(Factory_Type::Electricity_Wind);
-	AddManufacturerOfType(Factory_Type::Mine_Minerals);
-	AddManufacturerOfType(Factory_Type::Goods);
+	AddManufacturerOfType("wind_farm");
+	AddManufacturerOfType("wheat_farm");
+	AddManufacturerOfType("flour_mill");
+	AddManufacturerOfType("bakery");
+	//AddManufacturerOfType("iron_mine");
+	//AddManufacturerOfType("coal_mine");
+	//AddManufacturerOfType("steel_factory");
 }
 
-void World::AddManufacturerOfType(Factory_Type type)
+void World::AddManufacturerOfType(std::string type)
 {
 	manufacturers.push_back(manufacturerFactory.CreateManufacturer(Float2(GetRandomInt(0, size.x), GetRandomInt(0, size.y)), type));
 }
@@ -63,26 +67,29 @@ void World::Update(const double deltaTime)
 			continue;
 		}
 
-		auto *requesterData = manufacturers[i].GetSharedData();
-		//There is a need for resources to be delivered
-		int need = manufacturers[i].GetInputNeed();
-		if (requesterData->inputType != GoodsType::Electricity && need > 0)
+		auto* requesterData = manufacturers[i].GetSharedData();
+
+
+		for (const auto& inputElement : requesterData->recipe.input)
 		{
+			auto need = manufacturers[i].GetInputNeed(inputElement.goodsId);
+			if (need <= 0)
+			{
+				continue;
+			}
+
+			//There is a need for resources to be delivered
 			int bestIndex = -1;
 			float bestMagnitude = FLT_MAX;
 			for (size_t j = 0; j < manufacturers.size(); j++)
 			{
-				if (i == j)
+				if (i == j) //Ourself
 				{
 					continue;
 				}
-				auto* providerData = manufacturers[j].GetSharedData();
-				if (providerData->outputType != requesterData->inputType)
-				{
-					continue;
-				}
-				int available = manufacturers[j].GetAvailableOutput();
-				if (available > need)
+
+				int available = manufacturers[j].GetAvailableOutput(inputElement.goodsId);
+				if (available >= need)
 				{
 					auto sqrMagnitude = (manufacturers[i].GetPosition() - manufacturers[j].GetPosition()).SqrMagnitude();
 
@@ -97,28 +104,32 @@ void World::Update(const double deltaTime)
 			if (bestIndex != -1)
 			{
 				//Make pledge
-				int transportCount = manufacturers[bestIndex].GetAvailableOutput();
-				manufacturers[i].pledgedDeliveryInput += transportCount;
-				manufacturers[bestIndex].pledgedDeliveryOutput += transportCount;
-				CreateTransportRoute(bestIndex, i, requesterData->inputType, transportCount);
+				int transportCount = manufacturers[bestIndex].GetAvailableOutput(inputElement.goodsId);
+				manufacturers[i].AddDeliveryPledge(inputElement.goodsId, transportCount);
+				manufacturers[bestIndex].AddPickupPledge(inputElement.goodsId, transportCount);
+				CreateTransportRoute(bestIndex, i, inputElement.goodsId, transportCount);
 			}
 		}
 	}
-
-
 
 	//Print state
 	system("cls");
 	std::cout << "-Manufacturers-" << std::endl;
 	for (size_t i = 0; i < manufacturers.size(); i++)
 	{
-		auto* data = manufacturers[i].GetSharedData();
-		std::cout << "Manufacturer (" << i << ")" << std::endl;
-		auto position = manufacturers[i].GetPosition();
+		const auto* data = manufacturers[i].GetSharedData();
+		std::cout << data->name << std::endl;
+		const auto position = manufacturers[i].GetPosition();
 		std::cout << "-Position: " << position.x << " " << position.y << std::endl;
 		std::cout << "-Progress:" << manufacturers[i].GetProductionProgress() << std::endl;
-		std::cout << "-Input storage:" << manufacturers[i].inputName << " " << manufacturers[i].inputStorage << std::endl;
-		std::cout << "-Output storage:" << manufacturers[i].outputName << " " << manufacturers[i].outputStorage << std::endl;
+		std::cout << "-Storage-" << std::endl;
+		const auto& storage = manufacturers[i].GetStorage();
+		for(const auto& storageElement : storage)
+		{
+			auto goods = goodsDatabase.TryGetElement(storageElement.first);
+			std::string name = goods == nullptr ? "Unknown" : goods->name;
+			std::cout << name << " " << storageElement.second << std::endl;
+		}
 		std::cout << "-------------------" << std::endl;
 	}
 
@@ -131,13 +142,17 @@ void World::Update(const double deltaTime)
 		std::cout << "-Position: " << position.x << " " << position.y << std::endl;
 		std::cout << "-State: " << ToString(transporter.GetCurrentStatus()) << std::endl;
 		const HaulJob job = transporter.GetJob();
-		std::cout << "-Last/Current Job: " << "Delivering " << ToString(job.type) << " x" << job.count << " from " << job.pickupId << " to " << job.deliveryId << std::endl;
-		std::cout << "-Cargo: " << ToString(transporter.GetGoodsType()) << " x" << transporter.GetGoodsCount() << std::endl;
+		auto goods = goodsDatabase.TryGetElement(job.goodsId);
+		std::string name = goods == nullptr ? "Unknown" : goods->name;
+		std::cout << "-Last/Current Job: " << "Delivering " << name << " x" << job.count << " from " << job.pickupId << " to " << job.deliveryId << std::endl;
+		goods = goodsDatabase.TryGetElement(transporter.GetGoodsId());
+		name = goods == nullptr ? "Unknown" : goods->name;
+		std::cout << "-Cargo: " << name << " x" << transporter.GetGoodsCount() << std::endl;
 		std::cout << "-Speed: " << transporter.GetSpeed() << std::endl;
 		std::cout << "-------------------" << std::endl;
 	}
 
-	
+
 	std::cout << "-Time-" << std::endl;
 	std::cout << "Clock: " << clock << std::endl;
 	std::cout << "Hour: " << hour << std::endl;
@@ -151,47 +166,28 @@ Manufacturer& World::GetManufacturer(int index)
 void World::NewHour()
 {
 	int electricityAvailable = 0;
+
+	//Remove electricity
 	for (auto& manufacturer : manufacturers)
 	{
-		auto *data = manufacturer.GetSharedData();
-		//Clear old electricity from manufacturers input storages
-		if (data->inputType == GoodsType::Electricity && data->inputCount > 0)
-		{
-			manufacturer.inputStorage = 0;
-		}
-		//Collect electricity
-		if (data->outputType == GoodsType::Electricity && manufacturer.outputStorage > 0)
-		{
-			electricityAvailable += manufacturer.outputStorage;
-			manufacturer.outputStorage = 0;
-		}
+		manufacturer.SetPowerState(false);
+		electricityAvailable += manufacturer.GetOutputPower();
+		manufacturer.ClearOutputPower();
 	}
 
 	//Provide electricity
-	if (electricityAvailable > 0)
+	for (auto& manufacturer : manufacturers)
 	{
-		for (auto& manufacturer : manufacturers)
+		auto powerConsumption = manufacturer.GetSharedData()->powerConsumption;
+		if (electricityAvailable >= powerConsumption)
 		{
-			auto* data = manufacturer.GetSharedData();
-
-			if (data->inputType == GoodsType::Electricity && data->inputCount > 0)
-			{
-				auto demand = data->inputCount;
-				if (electricityAvailable >= demand)
-				{
-					manufacturer.inputStorage += demand;
-					electricityAvailable -= demand;
-					if (electricityAvailable <= 0)
-					{
-						break;
-					}
-				}
-			}
+			electricityAvailable -= powerConsumption;
+			manufacturer.SetPowerState(true);
 		}
 	}
 }
 
-void World::CreateTransportRoute(int from, int to, GoodsType type, int transportCount)
+void World::CreateTransportRoute(int from, int to, uint64_t type, int transportCount)
 {
 	int transportIndex = -1;
 
@@ -206,17 +202,17 @@ void World::CreateTransportRoute(int from, int to, GoodsType type, int transport
 
 	if (transportIndex == -1)
 	{
-		transporters.push_back(Transporter(Float2{0.0f, 0.0f}, 70));
+		transporters.push_back(Transporter(Float2{ 0.0f, 0.0f }, 70));
 		transportIndex = transporters.size() - 1;
 	}
-	
+
 	HaulJob job;
 	job.pickupId = from;
 	job.pickupPoint = manufacturers[from].GetPosition();
 	job.deliveryId = to;
 	job.deliveryPoint = manufacturers[to].GetPosition();
 	job.count = transportCount;
-	job.type = type;
-	
+	job.goodsId = type;
+
 	transporters[transportIndex].SetJob(job);
 }

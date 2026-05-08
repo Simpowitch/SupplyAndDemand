@@ -1,10 +1,25 @@
 #pragma once
 #include <vector>
-#include <utility>
+#include <nlohmann/json.hpp>
+#include "Hasher.h"
+#include "Goods.h"
 
 struct Recipe
 {
-	std::vector<std::pair<int, int>> input;
-	std::vector<std::pair<int, int>> output;
+	std::vector<GoodsAmount> input;
+	std::vector<GoodsAmount> output;
+
+	Recipe(const nlohmann::json& json)
+	{
+		for (const auto& inputElement : json["inputs"])
+		{
+			input.push_back({ HashString(inputElement["type"]), inputElement["count"] });
+		}
+
+		for (const auto& inputElement : json["outputs"])
+		{
+			output.push_back({ HashString(inputElement["type"]), inputElement["count"] });
+		}
+	}
 };
 

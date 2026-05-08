@@ -1,0 +1,21 @@
+{
+  "id": "flour_mill",
+  "name": "Flour Mill",
+  "recipe": {
+    "inputs": [
+      {
+        "type": "wheat",
+        "count": 40
+      }
+    ],
+    "outputs": [
+      {
+        "type": "flour",
+        "count": 10
+      }
+    ]
+  },
+  "production_time": 1.0,
+  "power_consumption": 10,
+  "power_production": 0
+}

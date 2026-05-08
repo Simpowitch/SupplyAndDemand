@@ -1,0 +1,18 @@
+{
+  "id": "wheat_farm",
+  "name": "Wheat Farm",
+  "recipe": {
+    "inputs": [
+
+    ],
+    "outputs": [
+      {
+        "type": "wheat",
+        "count": 100
+      }
+    ]
+  },
+  "production_time": 24.0,
+  "power_consumption": 0,
+  "power_production": 0
+}

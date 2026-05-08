@@ -6,6 +6,10 @@
 #include <iostream>
 #include <string>
 #include "Settings.h"
+#include <nlohmann/json.hpp>
+#include "Hasher.h"
+
+using json = nlohmann::json;
 
 template<typename Type>
 class Database
@@ -40,10 +44,18 @@ public:
 			std::stringstream buffer;
 			buffer << file.rdbuf();
 			std::string content = buffer.str();
+			if (content.empty())
+			{
+				continue;
+			}
+
+			json j = json::parse(content);
+
+			elements.emplace(HashString(j["id"]), Type(j));
 		}
 	}
 
-	const Type* TryGetElement(int id)
+	const Type* TryGetElement(uint64_t id)
 	{
 		auto it = elements.find(id);
 		if (it == elements.end())
@@ -54,6 +66,6 @@ public:
 	}
 
 private:
-	std::unordered_map<int, Type> elements;
+	std::unordered_map<uint64_t, Type> elements;
 };
 

@@ -1,0 +1,18 @@
+{
+  "id": "coal_mine",
+  "name": "Coal Mine",
+  "recipe": {
+    "inputs": [
+      
+    ],
+    "outputs": [
+      {
+        "type": "coal",
+        "count": 1
+      }
+    ]
+  },
+  "production_time": 1.0,
+  "power_consumption": 10,
+  "power_production": 0
+}

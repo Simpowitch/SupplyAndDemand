@@ -1,0 +1,14 @@
+{
+  "id": "wind_farm",
+  "name": "Wind Farm",
+  "recipe": {
+    "inputs": [
+
+    ],
+    "outputs": [
+    ]
+  },
+  "production_time": 1.0,
+  "power_consumption": 0,
+  "power_production": 600
+}
