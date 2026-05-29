@@ -129,14 +129,17 @@
   <ItemGroup>
     <ClCompile Include="Entity.cpp" />
     <ClCompile Include="Factory_Manufacturer.cpp" />
+    <ClCompile Include="Interface.cpp" />
     <ClCompile Include="Settings.cpp" />
     <ClCompile Include="Timer.cpp" />
-    <ClCompile Include="World.cpp" />
     <ClCompile Include="InputManager.cpp" />
     <ClCompile Include="Manufacturer.cpp" />
     <ClCompile Include="Pop.cpp" />
     <ClCompile Include="SupplyAndDemand.cpp" />
     <ClCompile Include="Transporter.cpp" />
+    <ClCompile Include="WorldController.cpp" />
+    <ClCompile Include="WorldModel.cpp" />
+    <ClCompile Include="WorldView.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Entity.h" />
@@ -146,17 +149,20 @@
     <ClInclude Include="Hasher.h" />
     <ClInclude Include="HaulJob.h" />
     <ClInclude Include="Float2.h" />
+    <ClInclude Include="Interface.h" />
     <ClInclude Include="Recipe.h" />
     <ClInclude Include="resource.h" />
     <ClInclude Include="RNG.h" />
     <ClInclude Include="Settings.h" />
     <ClInclude Include="Timer.h" />
-    <ClInclude Include="World.h" />
     <ClInclude Include="InputManager.h" />
     <ClInclude Include="Manufacturer.h" />
     <ClInclude Include="ManufacturerSharedData.h" />
     <ClInclude Include="Pop.h" />
     <ClInclude Include="Transporter.h" />
+    <ClInclude Include="WorldController.h" />
+    <ClInclude Include="WorldModel.h" />
+    <ClInclude Include="WorldView.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

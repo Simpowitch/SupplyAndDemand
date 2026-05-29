@@ -1,5 +1,5 @@
 #include "Transporter.h"
-#include "World.h"
+#include "WorldModel.h"
 
 Transporter::Transporter(Float2 position, float speed) : 
 	Entity(position),
@@ -8,7 +8,7 @@ Transporter::Transporter(Float2 position, float speed) :
 
 }
 
-void Transporter::Update(World& world, const double deltaTime, const double deltaHours)
+void Transporter::Update(WorldModel* model, const double deltaTime, const double deltaHours)
 {
 	switch (currentStatus)
 	{
@@ -20,7 +20,7 @@ void Transporter::Update(World& world, const double deltaTime, const double delt
 		if (HasReachedDestination(direction))
 		{
 			//Do pickup
-			Manufacturer& manufacturer = world.GetManufacturer(currentJob.pickupId);
+			Manufacturer& manufacturer = model->manufacturers[currentJob.pickupId];
 
 			cargo.count += manufacturer.PerformPickup(currentJob.goodsId, currentJob.count);
 			manufacturer.RemovePickupPledge(currentJob.goodsId, currentJob.count);
@@ -39,7 +39,7 @@ void Transporter::Update(World& world, const double deltaTime, const double delt
 		if (HasReachedDestination(direction))
 		{
 			//Do delivery
-			Manufacturer& manufacturer = world.GetManufacturer(currentJob.deliveryId);
+			Manufacturer& manufacturer = model->manufacturers[currentJob.deliveryId];
 
 			cargo.count -= manufacturer.PerformDelivery(cargo.goodsId, cargo.count);
 			manufacturer.RemoveDeliveryPledge(currentJob.goodsId, currentJob.count);

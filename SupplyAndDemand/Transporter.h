@@ -17,7 +17,7 @@ class Transporter : public Entity
 {
 public:
 	Transporter(Float2 position, float speed);
-	void Update(World& world, const double deltaTime, const double deltaHours) override;
+	void Update(WorldModel* world, const double deltaTime, const double deltaHours) override;
 	bool HasReachedDestination(const Float2& movement) const;
 	void MoveTowards(const Float2& movement, const float deltaHours);
 	void SetJob(const HaulJob& job);

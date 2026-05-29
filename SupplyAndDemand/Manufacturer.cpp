@@ -9,7 +9,7 @@ Manufacturer::Manufacturer(Float2 position, const ManufacturerSharedData* aShare
 
 }
 
-void Manufacturer::Update(World& world, const double deltaTime, const double deltaHours)
+void Manufacturer::Update(WorldModel* model, const double deltaTime, const double deltaHours)
 {
 	if (CanProduce())
 	{
