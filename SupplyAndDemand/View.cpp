@@ -23,7 +23,6 @@ void View::ParseInput(const InputManager* inputManager)
 
 void View::Draw()
 {
-	system("cls");
 	buffer.str("");
 	buffer.clear();
 
@@ -37,6 +36,7 @@ void View::Draw()
 		DrawSelf();
 	}
 
+	system("cls");
 	std::cout << buffer.str();
 }
 
@@ -44,14 +44,6 @@ void View::DrawSelf()
 {
 	PrintLine("Navigation:");
 	PrintLine("0: Back");
-
-	PrintLine("");
-	PrintLine("--------------");
-	PrintLine("");
-
-	PrintLine(name.c_str());
-	PrintLine("");
-
 	int childSize = children.size();
 	if (childSize > 0)
 	{
@@ -60,6 +52,13 @@ void View::DrawSelf()
 			buffer << (i + 1) << ": " << children[i]->name << std::endl;
 		}
 	}
+
+	PrintLine("");
+	PrintLine("--------------");
+	PrintLine("");
+
+	PrintLine(name.c_str());
+	PrintLine("");
 }
 
 void View::PrintLine(const char* message)
