@@ -2,8 +2,8 @@
 #include "RNG.h"
 #include <iostream>
 
-WorldController::WorldController(WorldModel* model, InputManager* inputManager) :
-	model(model), inputManager(inputManager)
+WorldController::WorldController(WorldModel* model) :
+	model(model)
 {
 	AddManufacturerOfType("wind_farm");
 	AddManufacturerOfType("wheat_farm");
@@ -20,7 +20,7 @@ void WorldController::AddManufacturerOfType(std::string type)
 	model->manufacturers.push_back(manufacturerFactory.CreateManufacturer(Float2(GetRandomInt(0, model->size.x), GetRandomInt(0, model->size.y)), type));
 }
 
-void WorldController::ParseInput()
+void WorldController::ParseInput(const InputManager* inputManager)
 {
 	if (inputManager->WasKeyPressed('P'))
 	{

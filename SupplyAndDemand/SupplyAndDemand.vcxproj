@@ -129,7 +129,7 @@
   <ItemGroup>
     <ClCompile Include="Entity.cpp" />
     <ClCompile Include="Factory_Manufacturer.cpp" />
-    <ClCompile Include="Interface.cpp" />
+    <ClCompile Include="ManufacturerView.cpp" />
     <ClCompile Include="Settings.cpp" />
     <ClCompile Include="Timer.cpp" />
     <ClCompile Include="InputManager.cpp" />
@@ -137,6 +137,8 @@
     <ClCompile Include="Pop.cpp" />
     <ClCompile Include="SupplyAndDemand.cpp" />
     <ClCompile Include="Transporter.cpp" />
+    <ClCompile Include="TransporterView.cpp" />
+    <ClCompile Include="View.cpp" />
     <ClCompile Include="WorldController.cpp" />
     <ClCompile Include="WorldModel.cpp" />
     <ClCompile Include="WorldView.cpp" />
@@ -149,7 +151,7 @@
     <ClInclude Include="Hasher.h" />
     <ClInclude Include="HaulJob.h" />
     <ClInclude Include="Float2.h" />
-    <ClInclude Include="Interface.h" />
+    <ClInclude Include="ManufacturerView.h" />
     <ClInclude Include="Recipe.h" />
     <ClInclude Include="resource.h" />
     <ClInclude Include="RNG.h" />
@@ -160,6 +162,8 @@
     <ClInclude Include="ManufacturerSharedData.h" />
     <ClInclude Include="Pop.h" />
     <ClInclude Include="Transporter.h" />
+    <ClInclude Include="TransporterView.h" />
+    <ClInclude Include="View.h" />
     <ClInclude Include="WorldController.h" />
     <ClInclude Include="WorldModel.h" />
     <ClInclude Include="WorldView.h" />

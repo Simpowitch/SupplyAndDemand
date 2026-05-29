@@ -1,12 +1,19 @@
 #include "WorldView.h"
 
-WorldView::WorldView(WorldModel* model, InputManager* inputManager, Database<Goods>* goodsDatabase) :
-	model(model), inputManager(inputManager), interface(model, inputManager, goodsDatabase)
-{
 
+WorldView::WorldView(const WorldModel* model, const Database<Goods>* goodsDatabase) :
+	model(model), goodsDatabase(goodsDatabase)
+{
+	
 }
 
-void WorldView::Draw()
+void WorldView::DrawSelf()
 {
-	interface.Draw();
+	View::DrawSelf();
+
+	std::cout << "Power balance: " << model->currentPowerBalance << std::endl;
+
+	std::cout << "-Time-" << std::endl;
+	std::cout << "Clock: " << model->clock << std::endl;
+	std::cout << "Hour: " << model->currentPowerBalance << std::endl;
 }

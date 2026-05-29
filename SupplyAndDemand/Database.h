@@ -55,7 +55,7 @@ public:
 		}
 	}
 
-	const Type* TryGetElement(uint64_t id)
+	const Type* TryGetElement(uint64_t id) const
 	{
 		auto it = elements.find(id);
 		if (it == elements.end())

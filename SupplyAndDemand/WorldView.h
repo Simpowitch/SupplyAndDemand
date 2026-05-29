@@ -1,18 +1,17 @@
 #pragma once
+#include "View.h"
 #include "WorldModel.h"
-#include "Interface.h"
 #include "Goods.h"
 #include "Database.h"
 
-class WorldView
+class WorldView : public View
 {
 public:
-	WorldView(WorldModel* model, InputManager* inputManager, Database<Goods>* goodsDatabase);
-	void Draw();
+	WorldView(const WorldModel* model, const Database<Goods>* goodsDatabase);
 
-private:
-	WorldModel* model;
-	InputManager* inputManager;
-	Interface interface; //TODO: Split into multiple screens/menus
+protected:
+	void DrawSelf() override;
+	const WorldModel* model;
+	const Database<Goods>* goodsDatabase;
 };
 
