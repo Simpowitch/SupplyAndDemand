@@ -15,5 +15,6 @@ void WorldView::DrawSelf()
 
 	PrintLine("-Time-");
 	buffer << "Clock: " << model->clock << std::endl;
-	buffer << "Hour: " << model->currentPowerBalance << std::endl;
+	buffer << "Hour: " << model->hour << std::endl;
+	PrintLine("------");
 }

@@ -42,7 +42,9 @@ void View::Draw()
 
 void View::DrawSelf()
 {
-	PrintLine("Navigation:");
+	PrintLine(name.c_str());
+	PrintLine("");
+	PrintLine("-Navigation-");
 	PrintLine("0: Back");
 	int childSize = children.size();
 	if (childSize > 0)
@@ -53,12 +55,7 @@ void View::DrawSelf()
 		}
 	}
 
-	PrintLine("");
-	PrintLine("--------------");
-	PrintLine("");
-
-	PrintLine(name.c_str());
-	PrintLine("");
+	PrintLine("---------");
 }
 
 void View::PrintLine(const char* message)
