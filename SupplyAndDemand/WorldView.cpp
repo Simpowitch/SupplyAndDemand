@@ -5,7 +5,7 @@
 WorldView::WorldView(const WorldModel* model, const Database<Goods>* goodsDatabase) :
 	model(model), goodsDatabase(goodsDatabase)
 {
-	
+
 }
 
 void WorldView::DrawSelf()
@@ -13,6 +13,7 @@ void WorldView::DrawSelf()
 	View::DrawSelf();
 
 	buffer << "Power balance: " << model->currentPowerBalance << std::endl;
+	buffer << "Population: " << model->population << std::endl;
 
 	PrintLine("-Time-");
 	buffer << "Clock: " << model->clock << std::endl;
@@ -20,24 +21,42 @@ void WorldView::DrawSelf()
 	PrintLine("------");
 
 	auto renderer = Renderer::GetInstance();
+	sf::RectangleShape rectangleShape;
+
+	const auto& font = renderer->GetMainFont();
+	sf::Text text(font);
+	text.setCharacterSize(14);
+	text.setFillColor(sf::Color::White);
+
+	int index = -1;
 	for (const auto& manufacturer : model->manufacturers)
 	{
 		const auto& renderData = manufacturer.GetRenderData();
-		auto shape = std::make_unique<sf::RectangleShape>();
-		shape->setSize(renderData.size);
-		shape->setFillColor(renderData.color);
-		shape->setPosition({ manufacturer.GetPosition().x, manufacturer.GetPosition().y });
-		renderer->Draw(std::move(shape));
+		const auto& position = manufacturer.GetPosition();
+		rectangleShape.setSize(renderData.size);
+		rectangleShape.setFillColor(renderData.color);
+		rectangleShape.setPosition({ position.x,position.y });
+		rectangleShape.setOrigin({ rectangleShape.getSize().x * 0.5f,rectangleShape.getSize().y * 0.5f });
+		renderer->Draw(rectangleShape);
+
+		text.setPosition({ position.x - rectangleShape.getSize().x * 0.5f, position.y - rectangleShape.getSize().y * 0.5f - text.getCharacterSize()});
+		text.setString("#" + std::to_string(++index) + " : " + manufacturer.GetSharedData()->name);
+		renderer->Draw(text);
 	}
 
-	for (const auto& transport : model->transporters)
+	index = -1;
+	for (const auto& transporter : model->transporters)
 	{
-		const auto& renderData = transport.GetRenderData();
+		const auto& renderData = transporter.GetRenderData();
+		const auto& position = transporter.GetPosition();
+		rectangleShape.setSize(renderData.size);
+		rectangleShape.setFillColor(renderData.color);
+		rectangleShape.setPosition({ position.x, position.y });
+		rectangleShape.setOrigin({ rectangleShape.getSize().x * 0.5f,rectangleShape.getSize().y * 0.5f });
+		renderer->Draw(rectangleShape);
 
-		auto shape = std::make_unique<sf::CircleShape>();
-		shape->setRadius(renderData.size.x);
-		shape->setFillColor(renderData.color);
-		shape->setPosition({ transport.GetPosition().x, transport.GetPosition().y });
-		renderer->Draw(std::move(shape));
+		text.setPosition({ position.x - rectangleShape.getSize().x * 0.5f, position.y - rectangleShape.getSize().y * 0.5f - text.getCharacterSize() });
+		text.setString("#" + std::to_string(++index) + " : Transporter");
+		renderer->Draw(text);
 	}
 }

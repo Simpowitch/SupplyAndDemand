@@ -4,10 +4,9 @@
 Renderer* instance = nullptr;
 
 Renderer::Renderer() :
-	drawables{1024},
-	window(sf::VideoMode(GetResolution()), settings::GetApplicationName(), sf::Style::Default, sf::State::Windowed)
+	window(sf::VideoMode(GetResolution()), settings::GetApplicationName(), sf::Style::Default, sf::State::Windowed),
+	font(settings::ResolveGameAssetPath("resources/fonts/OpenSans-Regular.ttf"))
 {
-
 }
 
 Renderer* Renderer::GetInstance()
@@ -22,7 +21,6 @@ Renderer* Renderer::GetInstance()
 
 bool Renderer::BeginFrame()
 {
-	drawables.clear();
 	window.clear();
 
 	if (!window.isOpen())
@@ -33,17 +31,13 @@ bool Renderer::BeginFrame()
 	return true;
 }
 
-void Renderer::Draw(std::unique_ptr<sf::Drawable> drawable)
+void Renderer::Draw(const sf::Drawable& drawable)
 {
-	drawables.push_back(std::move(drawable));
+	window.draw(drawable);
 }
 
 void Renderer::EndFrame()
 {
-	for (const auto& drawable : drawables)
-	{
-		window.draw(*drawable);
-	}
 	window.display();
 
 	while (const std::optional event = window.pollEvent())

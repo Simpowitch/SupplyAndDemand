@@ -1,21 +1,20 @@
 #pragma once
 #include <SFML/Graphics.hpp>
-#include <vector>
-#include <memory>
 
 class Renderer
 {
 public: 
 	static Renderer* GetInstance();
 	bool BeginFrame();
-	void Draw(std::unique_ptr<sf::Drawable> drawable);
+	void Draw(const sf::Drawable& drawable);
 	void EndFrame();
 	void Close();
+	const sf::Font& GetMainFont() const { return font; }
 private:
 	Renderer();
 	sf::Vector2u GetResolution();
-	std::vector<std::unique_ptr<sf::Drawable>> drawables;
 	sf::RenderWindow window;
+	sf::Font font;
 };
 
 struct RenderInstanceData

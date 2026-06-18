@@ -22,7 +22,7 @@ int main()
 	goodsDatabase.Load("resources/goods");
 	InputManager inputManager;
 	Timer timer;
-	//WorldModel worldModel(500.0f, 1500.0f);
+	//WorldModel worldModel(500.0f, 1500.0f); //Until we have a camera, we must have the same size as the map
 	WorldModel worldModel(settings::GetResolution().first, settings::GetResolution().second);
 	worldModel.population = 9000000;
 	WorldController worldController(&worldModel);
