@@ -1,6 +1,12 @@
 {
   "id": "coal_power_plant",
   "name": "Coal Power Plant",
+  "mapColor": {
+    "r": 150,
+    "g": 80,
+    "b": 80,
+    "a": 255
+  },
   "recipe": {
     "inputs": [
       {

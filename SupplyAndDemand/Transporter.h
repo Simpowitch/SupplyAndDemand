@@ -2,6 +2,7 @@
 
 #include "Entity.h"
 #include "HaulJob.h"
+#include "Renderer.h"
 
 enum class Status
 {
@@ -27,12 +28,14 @@ public:
 	uint64_t GetGoodsId() const { return cargo.goodsId; }
 	int GetGoodsCount() const { return cargo.count; }
 	int GetSpeed() const { return mySpeed; }
+	RenderInstanceData GetRenderData() const { return renderData; }
 
 private: 
 	float mySpeed;
 	HaulJob currentJob;
 	Status currentStatus = Status::Inactive;
 	GoodsAmount cargo;
+	RenderInstanceData renderData;
 };
 
 

@@ -4,7 +4,8 @@
 Manufacturer::Manufacturer(Float2 position, const ManufacturerSharedData* aSharedData) : 
 	Entity(position),
 	sharedData(aSharedData),
-	isPowered(sharedData->powerConsumption <= 0)
+	isPowered(sharedData->powerConsumption <= 0),
+	renderData({ {20.0, 10.0f}, sf::Color(sharedData->mapColor) })
 {
 
 }

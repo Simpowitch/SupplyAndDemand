@@ -1,6 +1,12 @@
 {
   "id": "wheat_farm",
   "name": "Wheat Farm",
+  "mapColor": {
+    "r": 120,
+    "g": 255,
+    "b": 0,
+    "a": 255
+  },
   "recipe": {
     "inputs": [
 

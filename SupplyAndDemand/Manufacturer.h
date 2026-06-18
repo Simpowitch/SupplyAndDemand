@@ -2,6 +2,7 @@
 #include "Entity.h"
 #include "ManufacturerSharedData.h"
 #include <unordered_map>
+#include "Renderer.h"
 
 class Manufacturer : public Entity
 {
@@ -40,6 +41,7 @@ public:
 	}
 	void SetPowerState(bool newState);
 	bool GetPowerState() const { return isPowered; }
+	RenderInstanceData GetRenderData() const { return renderData; }
 
 private:
 	const ManufacturerSharedData* sharedData;
@@ -49,5 +51,6 @@ private:
 	std::unordered_map<uint64_t, int> storage;
 	std::unordered_map<uint64_t, int> deliveryPledge;
 	std::unordered_map<uint64_t, int> pickupPledge;
+	RenderInstanceData renderData;
 };
 

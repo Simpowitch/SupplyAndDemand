@@ -1,6 +1,12 @@
 {
   "id": "iron_mine",
   "name": "Iron Mine",
+  "mapColor": {
+    "r": 0,
+    "g": 100,
+    "b": 200,
+    "a": 255
+  },
   "recipe": {
     "inputs": [
 

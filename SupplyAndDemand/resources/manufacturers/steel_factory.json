@@ -1,6 +1,12 @@
 {
-  "id":  "steel_factory",
+  "id": "steel_factory",
   "name": "Steel Factory",
+  "mapColor": {
+    "r": 110,
+    "g": 150,
+    "b": 170,
+    "a": 255
+  },
   "recipe": {
     "inputs": [
       {

@@ -1,6 +1,12 @@
 {
   "id": "bakery",
   "name": "Bakery",
+  "mapColor": {
+    "r": 255,
+    "g": 255,
+    "b": 0,
+    "a": 255
+  },
   "recipe": {
     "inputs": [
       {

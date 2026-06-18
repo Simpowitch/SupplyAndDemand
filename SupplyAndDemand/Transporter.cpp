@@ -3,7 +3,8 @@
 
 Transporter::Transporter(Float2 position, float speed) : 
 	Entity(position),
-	mySpeed(speed)
+	mySpeed(speed),
+	renderData({{5.0f, 5.0f}, sf::Color::White })
 {
 
 }

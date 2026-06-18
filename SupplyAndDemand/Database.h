@@ -17,7 +17,7 @@ public:
 	{
 		elements.clear();
 
-		std::string fullPath = ResolveGameAssetPath(path);
+		std::string fullPath = settings::ResolveGameAssetPath(path);
 
 		if (!std::filesystem::exists(fullPath))
 		{

@@ -10,16 +10,21 @@
 #include "TransporterView.h"
 #include "ManufacturerView.h"
 #include <memory>
+#include <SFML/Graphics.hpp>
+#include <vector>
+#include "Renderer.h"
 
 int main()
 {
-	LoadSettings();
+	settings::LoadSettings();
 
 	Database<Goods> goodsDatabase;
 	goodsDatabase.Load("resources/goods");
 	InputManager inputManager;
 	Timer timer;
-	WorldModel worldModel(500.0f, 1500.0f);
+	//WorldModel worldModel(500.0f, 1500.0f);
+	WorldModel worldModel(settings::GetResolution().first, settings::GetResolution().second);
+	worldModel.population = 9000000;
 	WorldController worldController(&worldModel);
 	WorldView root_view(&worldModel, &goodsDatabase);
 	root_view.name = "Main Menu";
@@ -31,22 +36,25 @@ int main()
 	root_view.AddChild(std::move(manufacturerView));
 	root_view.AddChild(std::move(transporterView));
 
-	while (true)
+	auto renderer = Renderer::GetInstance();
+	while (renderer->BeginFrame())
 	{
 		auto deltaTime = timer.Update();
 		inputManager.Update();
-		if (inputManager.WasKeyPressed('Q'))
-		{
-			std::cout << "Q was pressed, exiting...\n";
-			break;
-		}
 
 		worldController.ParseInput(&inputManager);
 		worldController.Update(deltaTime);
 		root_view.ParseInput(&inputManager);
 		root_view.Draw();
-
 		//std::cout << "Time between frames: " << deltaTime << " seconds\n";
+
+		if (inputManager.WasKeyPressed('Q'))
+		{
+			std::cout << "Q was pressed, exiting...\n";
+			renderer->Close();
+		}
+
+		renderer->EndFrame();
 	}
 
 	return 0;

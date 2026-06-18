@@ -1,6 +1,12 @@
 {
   "id": "wind_farm",
   "name": "Wind Farm",
+  "mapColor": {
+    "r": 240,
+    "g": 240,
+    "b": 240,
+    "a": 255
+  },
   "recipe": {
     "inputs": [
 

@@ -1,6 +1,12 @@
 {
   "id": "flour_mill",
   "name": "Flour Mill",
+  "mapColor": {
+    "r": 255,
+    "g": 255,
+    "b": 175,
+    "a": 255
+  },
   "recipe": {
     "inputs": [
       {
