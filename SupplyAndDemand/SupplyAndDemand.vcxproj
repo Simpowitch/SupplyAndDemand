@@ -103,11 +103,13 @@
       <PreprocessorDefinitions>_DEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
       <LanguageStandard>stdcpp17</LanguageStandard>
-      <AdditionalIncludeDirectories>$(ProjectDir)\include</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(ProjectDir)include\nlohmann;$(ProjectDir)include\SFML\include</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
       <GenerateDebugInformation>true</GenerateDebugInformation>
+      <AdditionalLibraryDirectories>$(ProjectDir)include\SFML\lib;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <AdditionalDependencies>sfml-graphics-d.lib;sfml-window-d.lib;sfml-audio-d.lib;sfml-network-d.lib;sfml-system-d.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
@@ -119,11 +121,13 @@
       <PreprocessorDefinitions>NDEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
       <LanguageStandard>stdcpp17</LanguageStandard>
-      <AdditionalIncludeDirectories>$(ProjectDir)\include</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(ProjectDir)include\nlohmann;$(ProjectDir)include\SFML\include</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
       <GenerateDebugInformation>true</GenerateDebugInformation>
+      <AdditionalLibraryDirectories>$(ProjectDir)include\SFML\lib;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <AdditionalDependencies>sfml-graphics.lib;sfml-window.lib;sfml-audio.lib;sfml-network.lib;sfml-system.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
@@ -167,6 +171,22 @@
     <ClInclude Include="WorldController.h" />
     <ClInclude Include="WorldModel.h" />
     <ClInclude Include="WorldView.h" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="resources\goods\bread.json" />
+    <None Include="resources\goods\coal.json" />
+    <None Include="resources\goods\flour.json" />
+    <None Include="resources\goods\iron.json" />
+    <None Include="resources\goods\steel.json" />
+    <None Include="resources\goods\wheat.json" />
+    <None Include="resources\manufacturers\bakery.json" />
+    <None Include="resources\manufacturers\coal_mine.json" />
+    <None Include="resources\manufacturers\coal_power_plant.json" />
+    <None Include="resources\manufacturers\flour_mill.json" />
+    <None Include="resources\manufacturers\iron_mine.json" />
+    <None Include="resources\manufacturers\steel_factory.json" />
+    <None Include="resources\manufacturers\wheat_farm.json" />
+    <None Include="resources\manufacturers\wind_farm.json" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

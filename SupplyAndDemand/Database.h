@@ -6,10 +6,8 @@
 #include <iostream>
 #include <string>
 #include "Settings.h"
-#include <nlohmann/json.hpp>
+#include <json.hpp>
 #include "Hasher.h"
-
-using json = nlohmann::json;
 
 template<typename Type>
 class Database
@@ -49,7 +47,7 @@ public:
 				continue;
 			}
 
-			json j = json::parse(content);
+			nlohmann::json j = nlohmann::json::parse(content);
 
 			elements.emplace(HashString(j["id"]), Type(j));
 		}

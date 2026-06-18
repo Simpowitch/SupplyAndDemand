@@ -1,6 +1,6 @@
 #include "Settings.h"
 
-#include <nlohmann/json.hpp>
+#include <json.hpp>
 #include <fstream>
 
 #include <windows.h>

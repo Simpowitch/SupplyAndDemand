@@ -13,6 +13,12 @@
       <UniqueIdentifier>{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}</UniqueIdentifier>
       <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav;mfcribbon-ms</Extensions>
     </Filter>
+    <Filter Include="Resource Files\Manufacturers">
+      <UniqueIdentifier>{4eea7284-ccb3-4562-8fdd-37f5ef6a3ba2}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Resource Files\Goods">
+      <UniqueIdentifier>{84c799c5-3703-4858-a943-ea3b08c0a3fa}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Entity.cpp">
@@ -131,5 +137,49 @@
     <ClInclude Include="View.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="resources\manufacturers\bakery.json">
+      <Filter>Resource Files\Manufacturers</Filter>
+    </None>
+    <None Include="resources\goods\bread.json">
+      <Filter>Resource Files\Goods</Filter>
+    </None>
+    <None Include="resources\goods\coal.json">
+      <Filter>Resource Files\Goods</Filter>
+    </None>
+    <None Include="resources\manufacturers\coal_mine.json">
+      <Filter>Resource Files\Manufacturers</Filter>
+    </None>
+    <None Include="resources\manufacturers\coal_power_plant.json">
+      <Filter>Resource Files\Manufacturers</Filter>
+    </None>
+    <None Include="resources\goods\flour.json">
+      <Filter>Resource Files\Goods</Filter>
+    </None>
+    <None Include="resources\manufacturers\flour_mill.json">
+      <Filter>Resource Files\Manufacturers</Filter>
+    </None>
+    <None Include="resources\goods\iron.json">
+      <Filter>Resource Files\Goods</Filter>
+    </None>
+    <None Include="resources\manufacturers\iron_mine.json">
+      <Filter>Resource Files\Manufacturers</Filter>
+    </None>
+    <None Include="resources\goods\steel.json">
+      <Filter>Resource Files\Goods</Filter>
+    </None>
+    <None Include="resources\manufacturers\steel_factory.json">
+      <Filter>Resource Files\Manufacturers</Filter>
+    </None>
+    <None Include="resources\goods\wheat.json">
+      <Filter>Resource Files\Goods</Filter>
+    </None>
+    <None Include="resources\manufacturers\wheat_farm.json">
+      <Filter>Resource Files\Manufacturers</Filter>
+    </None>
+    <None Include="resources\manufacturers\wind_farm.json">
+      <Filter>Resource Files\Manufacturers</Filter>
+    </None>
   </ItemGroup>
 </Project>

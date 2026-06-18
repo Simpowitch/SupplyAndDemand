@@ -1,6 +1,6 @@
 #pragma once
 #include "Recipe.h"
-#include <nlohmann/json.hpp>
+#include <json.hpp>
 #include <string>
 #include "Hasher.h"
 
