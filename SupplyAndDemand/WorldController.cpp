@@ -35,6 +35,14 @@ void WorldController::ParseInput(const InputManager* inputManager)
 			std::cout << "Unpaused\n";
 		}
 	}
+	if (inputManager->WasKeyPressed('A'))
+	{
+		simulationSpeedIndex = std::min(simulationSpeedIndex + 1, SIMULATION_SPEED_STEPS - 1);
+	}
+	else if (inputManager->WasKeyPressed('B'))
+	{
+		simulationSpeedIndex = std::max(simulationSpeedIndex - 1, 0);
+	}
 }
 
 void WorldController::Update(const double deltaTime)
@@ -43,7 +51,8 @@ void WorldController::Update(const double deltaTime)
 	{
 		return;
 	}
-	double deltaHours = deltaTime / SECONDS_TO_HOURS;
+	double simulatedDeltaTime = simlationSpeeds[simulationSpeedIndex] * deltaTime;
+	double deltaHours = simulatedDeltaTime / SECONDS_TO_HOURS;
 	model->clock += deltaHours;
 
 	if (model->clock - model->hour >= 1.0)
@@ -62,12 +71,12 @@ void WorldController::Update(const double deltaTime)
 
 	for (auto& manufacturer : model->manufacturers)
 	{
-		manufacturer.Update(model, deltaTime, deltaHours);
+		manufacturer.Update(model, simulatedDeltaTime, deltaHours);
 	}
 
 	for (auto& transporter : model->transporters)
 	{
-		transporter.Update(model, deltaTime, deltaHours);
+		transporter.Update(model, simulatedDeltaTime, deltaHours);
 	}
 
 	//TODO: Can this 3rd loop be inserted into the 1st above?
