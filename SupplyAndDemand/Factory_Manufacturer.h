@@ -12,5 +12,5 @@ public:
 	Manufacturer CreateManufacturer(Float2 position, const std::string& typeName);
 
 private:
-	Database<ManufacturerSharedData> sharedData;
+	Database<ManufacturerSharedData> database;
 };
