@@ -87,7 +87,7 @@ void Transporter::SetJob(const HaulJob& job)
 	}
 }
 
-const char* ToString(Status status)
+const char* ToString(const Status& status)
 {
 	switch (status)
 	{

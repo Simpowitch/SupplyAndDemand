@@ -11,7 +11,7 @@ enum class Status
 	Delivery,
 };
 
-const char* ToString(Status status);
+const char* ToString(const Status& status);
 
 
 class Transporter : public Entity

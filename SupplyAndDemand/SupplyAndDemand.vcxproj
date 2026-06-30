@@ -145,7 +145,6 @@
     <ClCompile Include="TransporterView.cpp" />
     <ClCompile Include="View.cpp" />
     <ClCompile Include="WorldController.cpp" />
-    <ClCompile Include="WorldModel.cpp" />
     <ClCompile Include="WorldView.cpp" />
   </ItemGroup>
   <ItemGroup>
