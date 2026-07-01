@@ -3,8 +3,25 @@
 #include "ManufacturerSharedData.h"
 #include <unordered_map>
 #include "Renderer.h"
+#include "GoodsRequester.h"
+#include "GoodsProvider.h"
+#include <array>
 
-class Manufacturer : public Entity
+struct GoodsState
+{
+	int current{};
+	int reserved{};
+
+	int GetUnreserved() const { return current - reserved; }
+};
+
+struct InventoryEntry
+{
+	uint64_t goodsId{};
+	GoodsState goods{};
+};
+
+class Manufacturer : public Entity, public GoodsRequester, public GoodsProvider
 {
 public:
 	Manufacturer(Float2 position, const ManufacturerSharedData* aSharedData);
@@ -16,24 +33,11 @@ public:
 		return sharedData;
 	}
 
-	const std::unordered_map<uint64_t, int> GetStorage() const
-	{
-		return storage;
-	}
-
 	double GetProductionProgress() const
 	{
 		return productionProgress;
 	}
 
-	int GetInputNeed(uint64_t goodsType) const;
-	int GetAvailableOutput(uint64_t goodsType) const;
-	int PerformPickup(uint64_t type, int count);
-	int PerformDelivery(uint64_t type, int count);
-	void AddDeliveryPledge(uint64_t type, int count);
-	void AddPickupPledge(uint64_t type, int count);
-	void RemoveDeliveryPledge(uint64_t type, int count);
-	void RemovePickupPledge(uint64_t type, int count);
 	int GetOutputPower() const { return outputPower; }
 	void ClearOutputPower()
 	{
@@ -43,14 +47,40 @@ public:
 	bool GetPowerState() const { return isPowered; }
 	RenderInstanceData GetRenderData() const { return renderData; }
 
+	uint8_t GetInputSlotCount() const;
+	InventoryEntry GetInputInventory(const size_t index) const;
+	uint8_t GetOutputSlotCount() const;
+	InventoryEntry GetOutputInventory(const size_t index) const;
+
+	std::string GetName() const override { return sharedData->name; }
+
+	//GoodsRequester
+	void CollectRequests(std::vector<TransportRequest>&) override;
+	int PerformDelivery(uint64_t goodsId, int count) override;
+	void AddIncomingReservation(uint64_t goodsId, int count) override;
+	void RemoveIncomingReservation(uint64_t goodsId, int count) override;
+	Float2 GetDeliveryPosition() const override { return Entity::GetPosition() + Float2(-5, 0); } 
+
+	//GoodsProvider
+	int GetAvailableSupply(const uint64_t goodsId) const override;
+	int PerformPickup(uint64_t goodsId, int count) override;
+	void AddOutgoingReservation(uint64_t goodsId, int count) override;
+	void RemoveOutgoingReservation(uint64_t goodsId, int count) override;
+	Float2 GetPickupPosition() const override { return Entity::GetPosition() + Float2(5, 0); } 
+
 private:
 	const ManufacturerSharedData* sharedData;
 	double productionProgress = 0.;
 	bool isPowered = false;
 	int outputPower = 0;
-	std::unordered_map<uint64_t, int> storage;
-	std::unordered_map<uint64_t, int> deliveryPledge;
-	std::unordered_map<uint64_t, int> pickupPledge;
 	RenderInstanceData renderData;
+
+	static constexpr uint8_t MAX_INPUTS = 4;
+	static constexpr uint8_t MAX_OUTPUTS = 4;
+	static constexpr int DESIRED_INPUT_COUNT = 100;
+	static constexpr int REQUEST_INPUT_THRESHOLD = 80;
+
+	std::array<GoodsState, MAX_INPUTS> inputStorage;
+	std::array<GoodsState, MAX_OUTPUTS> outputStorage;
 };
 

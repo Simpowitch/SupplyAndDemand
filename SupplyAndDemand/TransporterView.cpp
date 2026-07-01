@@ -15,7 +15,7 @@ void TransporterView::DrawSelf()
 		const HaulJob job = transporter.GetJob();
 		auto goods = goodsDatabase->TryGetElement(job.goodsId);
 		std::string name = goods == nullptr ? "Unknown" : goods->name;
-		buffer << "-Last/Current Job: " << "Delivering " << name << " x" << job.count << " from #" << job.pickupId << " to #" << job.deliveryId << std::endl;
+		buffer << "-Last/Current Job: " << "Delivering " << name << " x" << job.goodsCount << " from " << job.provider->GetName() << " to #" << job.requester->GetName() << std::endl;
 		goods = goodsDatabase->TryGetElement(transporter.GetGoodsId());
 		name = goods == nullptr ? "Unknown" : goods->name;
 		buffer << "-Cargo: " << name << " x" << transporter.GetGoodsCount() << std::endl;

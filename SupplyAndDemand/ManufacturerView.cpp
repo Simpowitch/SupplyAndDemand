@@ -14,13 +14,21 @@ void ManufacturerView::DrawSelf()
 		buffer << "-Position: " << position.x << " " << position.y << std::endl;
 		buffer << "-Progress:" << manufacturer.GetProductionProgress() << std::endl;
 		buffer << "-Has Power: " << manufacturer.GetPowerState() << std::endl;
-		buffer << "-Storage-" << std::endl;
-		const auto& storage = manufacturer.GetStorage();
-		for (const auto& storageElement : storage)
+		buffer << "-Input Storage-" << std::endl;
+		for (size_t i = 0; i < manufacturer.GetInputSlotCount(); i++)
 		{
-			auto goods = goodsDatabase->TryGetElement(storageElement.first);
+			const auto& storageSlot = manufacturer.GetInputInventory(i);
+			auto goods = goodsDatabase->TryGetElement(storageSlot.goodsId);
 			std::string name = goods == nullptr ? "Unknown" : goods->name;
-			buffer << name << " " << storageElement.second << std::endl;
+			buffer << name << " " << storageSlot.goods.current << std::endl;
+		}
+		buffer << "-Output Storage-" << std::endl;
+		for (size_t i = 0; i < manufacturer.GetOutputSlotCount(); i++)
+		{
+			const auto& storageSlot = manufacturer.GetOutputInventory(i);
+			auto goods = goodsDatabase->TryGetElement(storageSlot.goodsId);
+			std::string name = goods == nullptr ? "Unknown" : goods->name;
+			buffer << name << " " << storageSlot.goods.current << std::endl;
 		}
 		PrintLine("-------------------");
 	}

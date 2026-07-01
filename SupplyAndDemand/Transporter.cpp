@@ -1,5 +1,7 @@
 #include "Transporter.h"
 #include "WorldModel.h"
+#include "GoodsProvider.h"
+#include "GoodsRequester.h"
 
 Transporter::Transporter(Float2 position, float speed) : 
 	Entity(position),
@@ -17,14 +19,12 @@ void Transporter::Update(WorldModel* model, const double deltaTime, const double
 		break;
 	case Status::Pickup:
 	{
-		Float2 direction = currentJob.pickupPoint - position;
+		Float2 direction = currentJob.provider->GetPickupPosition() - position;
 		if (HasReachedDestination(direction))
 		{
 			//Do pickup
-			Manufacturer& manufacturer = model->manufacturers[currentJob.pickupId];
-
-			cargo.count += manufacturer.PerformPickup(currentJob.goodsId, currentJob.count);
-			manufacturer.RemovePickupPledge(currentJob.goodsId, currentJob.count);
+			currentJob.provider->RemoveOutgoingReservation(currentJob.goodsId, currentJob.goodsCount);
+			cargo.count += currentJob.provider->PerformPickup(currentJob.goodsId, currentJob.goodsCount);
 
 			currentStatus = Status::Delivery;
 		}
@@ -36,14 +36,12 @@ void Transporter::Update(WorldModel* model, const double deltaTime, const double
 	}
 	case Status::Delivery:
 	{
-		Float2 direction = currentJob.deliveryPoint - position;
+		Float2 direction = currentJob.requester->GetDeliveryPosition() - position;
 		if (HasReachedDestination(direction))
 		{
 			//Do delivery
-			Manufacturer& manufacturer = model->manufacturers[currentJob.deliveryId];
-
-			cargo.count -= manufacturer.PerformDelivery(cargo.goodsId, cargo.count);
-			manufacturer.RemoveDeliveryPledge(currentJob.goodsId, currentJob.count);
+			currentJob.requester->RemoveIncomingReservation(currentJob.goodsId, currentJob.goodsCount);
+			cargo.count -= currentJob.requester->PerformDelivery(cargo.goodsId, cargo.count);
 
 			currentStatus = Status::Inactive;
 		}

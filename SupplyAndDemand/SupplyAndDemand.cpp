@@ -1,6 +1,6 @@
 #include <iostream>
 #include "Settings.h"
-#include "Timer.h"
+#include "FrameClock.h"
 #include "InputManager.h"
 #include "WorldModel.h"
 #include "WorldController.h"
@@ -21,7 +21,7 @@ int main()
 	Database<Goods> goodsDatabase;
 	goodsDatabase.Load("resources/goods");
 	InputManager inputManager;
-	Timer timer;
+	FrameClock clock;
 	//WorldModel worldModel(500.0f, 1500.0f); //Until we have a camera, we must have the same size as the map
 	WorldModel worldModel(settings::GetResolution().first, settings::GetResolution().second);
 	worldModel.population = 9000000;
@@ -39,7 +39,7 @@ int main()
 	auto renderer = Renderer::GetInstance();
 	while (renderer->BeginFrame())
 	{
-		auto deltaTime = timer.Update();
+		auto deltaTime = clock.Tick();
 		inputManager.Update();
 
 		worldController.ParseInput(&inputManager);

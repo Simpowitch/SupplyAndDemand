@@ -3,6 +3,7 @@
 #include "Entity.h"
 #include "HaulJob.h"
 #include "Renderer.h"
+#include "Goods.h"
 
 enum class Status
 {

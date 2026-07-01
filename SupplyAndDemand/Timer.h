@@ -1,13 +1,12 @@
 #pragma once
-#include <chrono>
 
 class Timer
 {
 public:
-	Timer();
-	double Update();
+	Timer(double startTime);
+	double Update(double elapsedTime);
 
 private:
-	std::chrono::steady_clock::time_point lastUpdate;
+	double time;
 };
 

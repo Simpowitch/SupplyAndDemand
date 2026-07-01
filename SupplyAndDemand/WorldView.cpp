@@ -30,6 +30,31 @@ void WorldView::DrawSelf()
 	text.setCharacterSize(14);
 	text.setFillColor(sf::Color::White);
 
+	for (const auto& city : model->cities)
+	{
+		const auto& renderData = city.GetRenderData();
+		const auto& position = city.GetPosition();
+		rectangleShape.setSize(renderData.size);
+		rectangleShape.setFillColor(renderData.color);
+		rectangleShape.setPosition({ position.x,position.y });
+		rectangleShape.setOrigin({ rectangleShape.getSize().x * 0.5f,rectangleShape.getSize().y * 0.5f });
+		renderer->Draw(rectangleShape);
+
+		std::string infoText = city.GetName();
+		infoText += "\Population: " + std::to_string(city.GetPopulation());
+		infoText += "\nStorage: ";
+		const auto& storage = city.GetStorage();
+		for (const auto& storageElement : storage)
+		{
+			auto goods = goodsDatabase->TryGetElement(storageElement.first);
+			std::string name = goods == nullptr ? "Unknown" : goods->name;
+			infoText += "\n" + name + " " + std::to_string(storageElement.second);
+		}
+		text.setString(infoText);
+		text.setPosition({ position.x - rectangleShape.getSize().x * 0.5f, position.y - rectangleShape.getSize().y * 0.5f - text.getCharacterSize() });
+		renderer->Draw(text);
+	}
+
 	int index = -1;
 	for (const auto& manufacturer : model->manufacturers)
 	{
@@ -44,14 +69,33 @@ void WorldView::DrawSelf()
 		std::string infoText = "#" + std::to_string(++index) + " : " + manufacturer.GetSharedData()->name;
 		infoText += "\nPower: " + std::to_string(manufacturer.GetPowerState());
 		infoText += "\nProgress: " + std::to_string(manufacturer.GetProductionProgress());
-		infoText += "\nStorage";
-		const auto& storage = manufacturer.GetStorage();
-		for (const auto& storageElement : storage)
+
+		const auto inputCount = manufacturer.GetInputSlotCount();
+		if (inputCount > 0)
 		{
-			auto goods = goodsDatabase->TryGetElement(storageElement.first);
-			std::string name = goods == nullptr ? "Unknown" : goods->name;
-			infoText += "\n" + name + " " + std::to_string(storageElement.second);
+			infoText += "\nInput Storage: ";
+			for (size_t i = 0; i < inputCount; i++)
+			{
+				const auto& storageSlot = manufacturer.GetInputInventory(i);
+				auto goods = goodsDatabase->TryGetElement(storageSlot.goodsId);
+				std::string name = goods == nullptr ? "Unknown" : goods->name;
+				infoText += "\n" + name + " x" + std::to_string(storageSlot.goods.current) + " (" + std::to_string(storageSlot.goods.reserved) + ")";
+			}
 		}
+
+		const auto outputCount = manufacturer.GetOutputSlotCount();
+		if (outputCount > 0)
+		{
+			infoText += "\nOutput Storage: ";
+			for (size_t i = 0; i < outputCount; i++)
+			{
+				const auto& storageSlot = manufacturer.GetOutputInventory(i);
+				auto goods = goodsDatabase->TryGetElement(storageSlot.goodsId);
+				std::string name = goods == nullptr ? "Unknown" : goods->name;
+				infoText += "\n" + name + " x" + std::to_string(storageSlot.goods.current) + " (" + std::to_string(storageSlot.goods.reserved) + ")";
+			}
+		}
+		
 		text.setString(infoText);
 		text.setPosition({ position.x - rectangleShape.getSize().x * 0.5f, position.y - rectangleShape.getSize().y * 0.5f - text.getCharacterSize() });
 		renderer->Draw(text);
@@ -74,7 +118,7 @@ void WorldView::DrawSelf()
 		const HaulJob job = transporter.GetJob();
 		auto goods = goodsDatabase->TryGetElement(job.goodsId);
 		std::string name = goods == nullptr ? "Unknown" : goods->name;
-		infoText += "\nLast/Current Job: Delivering " + name + " x" + std::to_string(job.count) + " from #" + std::to_string(job.pickupId) + " to #" + std::to_string(job.deliveryId);
+		infoText += "\nLast/Current Job: Delivering " + name + " x" + std::to_string(job.goodsCount) + " from " + job.provider->GetName() + " to " + job.requester->GetName();
 		infoText += "\nCargo: " + name + " x" + std::to_string(transporter.GetGoodsCount());
 		infoText += "\nSpeed: " + std::to_string(transporter.GetSpeed());
 

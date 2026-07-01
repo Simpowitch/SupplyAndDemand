@@ -1,7 +1,7 @@
 #include "Manufacturer.h"
 #include "Goods.h"
 
-Manufacturer::Manufacturer(Float2 position, const ManufacturerSharedData* aSharedData) : 
+Manufacturer::Manufacturer(Float2 position, const ManufacturerSharedData* aSharedData) :
 	Entity(position),
 	sharedData(aSharedData),
 	isPowered(sharedData->powerConsumption <= 0),
@@ -19,17 +19,17 @@ void Manufacturer::Update(WorldModel* model, const double deltaTime, const doubl
 		{
 			productionProgress -= sharedData->productionTime;
 
-			for (const auto& recipeElement : sharedData->recipe.output)
+			for (std::size_t i = 0; i < MAX_INPUTS && i < sharedData->recipe.input.size(); ++i)
 			{
-				storage[recipeElement.goodsId] += recipeElement.count;
+				inputStorage[i].current -= sharedData->recipe.input[i].count;
+			}
+
+			for (std::size_t i = 0; i < MAX_OUTPUTS && i < sharedData->recipe.output.size(); ++i)
+			{
+				outputStorage[i].current += sharedData->recipe.output[i].count;
 			}
 
 			outputPower += sharedData->powerProduction;
-
-			for (const auto& recipeElement : sharedData->recipe.input)
-			{
-				storage[recipeElement.goodsId] -= recipeElement.count;
-			}
 		}
 	}
 }
@@ -40,9 +40,9 @@ bool Manufacturer::CanProduce()
 	{
 		return false;
 	}
-	for (const auto& recipeElement : sharedData->recipe.input)
+	for (std::size_t i = 0; i < MAX_INPUTS && i < sharedData->recipe.input.size(); ++i)
 	{
-		if (storage[recipeElement.goodsId] < recipeElement.count)
+		if (inputStorage[i].current < sharedData->recipe.input[i].count)
 		{
 			return false;
 		}
@@ -50,103 +50,148 @@ bool Manufacturer::CanProduce()
 	return true;
 }
 
-int Manufacturer::GetInputNeed(uint64_t goodsType) const
+void Manufacturer::SetPowerState(bool newState)
 {
-	for (const auto& recipeElement : sharedData->recipe.input)
+	isPowered = newState;
+}
+
+uint8_t Manufacturer::GetInputSlotCount() const
+{
+	return sharedData->recipe.input.size();
+}
+
+InventoryEntry Manufacturer::GetInputInventory(const size_t index) const
+{
+	return InventoryEntry{ sharedData->recipe.input[index].goodsId, inputStorage[index] };
+}
+
+uint8_t Manufacturer::GetOutputSlotCount() const
+{
+	return sharedData->recipe.output.size();
+}
+
+InventoryEntry Manufacturer::GetOutputInventory(const size_t index) const
+{
+	return InventoryEntry{ sharedData->recipe.output[index].goodsId, outputStorage[index] };
+}
+
+//Goods requester
+void Manufacturer::CollectRequests(std::vector<TransportRequest>& requests)
+{
+	for (std::size_t i = 0; i < MAX_INPUTS && i < sharedData->recipe.input.size(); ++i)
 	{
-		if (recipeElement.goodsId != goodsType)
+		const auto& slot = inputStorage[i];
+		if (slot.current + slot.reserved >= REQUEST_INPUT_THRESHOLD)
 		{
 			continue;
 		}
-		int inStorage = 0;
-		int pledged = 0;
-
-		auto it = storage.find(goodsType);
-		if (it != storage.end())
+		const int amount = DESIRED_INPUT_COUNT - slot.current - slot.reserved;
+		if (amount > 0)
 		{
-			inStorage = it->second;
+			requests.emplace_back(TransportRequest{ sharedData->recipe.input[i].goodsId, amount, this});
 		}
+	}
+}
 
-		it = deliveryPledge.find(goodsType);
-		if (it != deliveryPledge.end())
+int Manufacturer::PerformDelivery(const uint64_t goodsId, int count)
+{
+	for (std::size_t i = 0; i < MAX_INPUTS && i < sharedData->recipe.input.size(); ++i)
+	{
+		if (goodsId != sharedData->recipe.input[i].goodsId)
 		{
-			pledged = it->second;
+			continue;
 		}
-
-		return recipeElement.count - (inStorage + pledged);
+		inputStorage[i].current += count;
+		return count;
 	}
 	return 0;
 }
 
-int Manufacturer::GetAvailableOutput(uint64_t goodsType) const
+void Manufacturer::AddIncomingReservation(const uint64_t goodsId, const int count)
 {
-	//If we need the goods, never allow anyone to take it
-	for (const auto& recipeElement : sharedData->recipe.input)
+	for (std::size_t i = 0; i < MAX_INPUTS && i < sharedData->recipe.input.size(); ++i)
 	{
-		if (recipeElement.goodsId == goodsType)
+		if (goodsId != sharedData->recipe.input[i].goodsId)
 		{
-			return 0;
+			continue;
 		}
+		inputStorage[i].reserved += count;
+		return;
 	}
+}
 
-	int inStorage = 0;
-	int pledged = 0;
-
-	auto it = storage.find(goodsType);
-	if (it != storage.end())
+void Manufacturer::RemoveIncomingReservation(const uint64_t goodsId, const int count)
+{
+	for (std::size_t i = 0; i < MAX_INPUTS && i < sharedData->recipe.input.size(); ++i)
 	{
-		inStorage = it->second;
+		if (goodsId != sharedData->recipe.input[i].goodsId)
+		{
+			continue;
+		}
+		inputStorage[i].reserved -= count;
+		return;
 	}
+}
 
-	it = deliveryPledge.find(goodsType);
-	if (it != deliveryPledge.end())
+
+//Goods provider
+int Manufacturer::GetAvailableSupply(const uint64_t goodsId) const
+{
+	for (std::size_t i = 0; i < MAX_OUTPUTS && i < sharedData->recipe.output.size(); ++i)
 	{
-		pledged = it->second;
+		if (goodsId != sharedData->recipe.output[i].goodsId)
+		{
+			continue;
+		}
+		return outputStorage[i].GetUnreserved();
 	}
-
-	return inStorage - pledged;
+	return 0;
 }
 
-int Manufacturer::PerformPickup(uint64_t type, int count)
+int Manufacturer::PerformPickup(const uint64_t goodsId, int count)
 {
-	//Clamp to what exists in storage if exceeding
-	int inStorage = storage[type];
-	if (inStorage < count)
+	for (std::size_t i = 0; i < MAX_OUTPUTS && i < sharedData->recipe.output.size(); ++i)
 	{
-		count = inStorage;
+		if (goodsId != sharedData->recipe.output[i].goodsId)
+		{
+			continue;
+		}
+		auto& slot = outputStorage[i];
+		int inStorage = slot.GetUnreserved();
+
+		//Clamp to what exists in storage if exceeding
+		if (inStorage < count)
+		{
+			count = inStorage;
+		}
+		slot.current -= count;
+		return count;
 	}
-
-	storage[type] -= count;
-	return count;
+	return 0;
 }
 
-int Manufacturer::PerformDelivery(uint64_t type, int count)
+void Manufacturer::AddOutgoingReservation(const uint64_t goodsId, const int count)
 {
-	storage[type] += count;
-	return count;
+	for (std::size_t i = 0; i < MAX_OUTPUTS && i < sharedData->recipe.output.size(); ++i)
+	{
+		if (goodsId != sharedData->recipe.output[i].goodsId)
+		{
+			continue;
+		}
+		outputStorage[i].reserved += count;
+		return;
+	}
 }
 
-void Manufacturer::AddDeliveryPledge(uint64_t type, int count)
+void Manufacturer::RemoveOutgoingReservation(const uint64_t goodsId, const int count)
 {
-	deliveryPledge[type] += count;
-}
-
-void Manufacturer::AddPickupPledge(uint64_t type, int count)
-{
-	pickupPledge[type] += count;
-}
-
-void Manufacturer::RemoveDeliveryPledge(uint64_t type, int count)
-{
-	deliveryPledge[type] -= count;
-}
-
-void Manufacturer::RemovePickupPledge(uint64_t type, int count)
-{
-	pickupPledge[type] -= count;
-}
-
-void Manufacturer::SetPowerState(bool newState)
-{
-	isPowered = newState;
+	for (std::size_t i = 0; i < MAX_OUTPUTS && i < sharedData->recipe.output.size(); ++i)
+	{
+		if (goodsId != sharedData->recipe.output[i].goodsId)
+		{
+			continue;
+		}
+		outputStorage[i].reserved -= count;
+		return;
+	}
 }

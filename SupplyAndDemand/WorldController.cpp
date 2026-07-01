@@ -1,10 +1,17 @@
 #include "WorldController.h"
 #include "RNG.h"
 #include <iostream>
+#include <math.h>
+#include "MathUtils.h"
+#include "TransportRequest.h"
 
 WorldController::WorldController(WorldModel* model) :
 	model(model)
 {
+	model->cities.push_back(City(GetRandomFloat2(model->size), "Stockholm", 100));
+	model->cities.push_back(City(GetRandomFloat2(model->size), "Malmö", 50));
+	model->cities.push_back(City(GetRandomFloat2(model->size), "Göteborg", 50));
+
 	AddManufacturerOfType("wind_farm");
 	AddManufacturerOfType("wheat_farm");
 	AddManufacturerOfType("flour_mill");
@@ -17,7 +24,7 @@ WorldController::WorldController(WorldModel* model) :
 
 void WorldController::AddManufacturerOfType(std::string type)
 {
-	model->manufacturers.push_back(manufacturerFactory.CreateManufacturer(Float2(GetRandomInt(0, model->size.x), GetRandomInt(0, model->size.y)), type));
+	model->manufacturers.push_back(manufacturerFactory.CreateManufacturer(GetRandomFloat2(model->size), type));
 }
 
 void WorldController::ParseInput(const InputManager* inputManager)
@@ -62,11 +69,17 @@ void WorldController::Update(const double deltaTime)
 		if (model->hour >= 24)
 		{
 			model->hour = 0;
+			//NewDay();
 		}
 	}
 	if (model->clock >= 24)
 	{
 		model->clock -= 24;
+	}
+
+	for (auto& city : model->cities)
+	{
+		city.Update(model, simulatedDeltaTime, deltaHours);
 	}
 
 	for (auto& manufacturer : model->manufacturers)
@@ -78,65 +91,11 @@ void WorldController::Update(const double deltaTime)
 	{
 		transporter.Update(model, simulatedDeltaTime, deltaHours);
 	}
-
-	//TODO: Can this 3rd loop be inserted into the 1st above?
-
-	//Check if transports are needed
-	for (size_t i = 0; i < model->manufacturers.size(); i++)
-	{
-		if (model->manufacturers[i].CanProduce())
-		{
-			continue;
-		}
-
-		auto* requesterData = model->manufacturers[i].GetSharedData();
-
-
-		for (const auto& inputElement : requesterData->recipe.input)
-		{
-			auto need = model->manufacturers[i].GetInputNeed(inputElement.goodsId);
-			if (need <= 0)
-			{
-				continue;
-			}
-
-			//There is a need for resources to be delivered
-			int bestIndex = -1;
-			float bestMagnitude = FLT_MAX;
-			for (size_t j = 0; j < model->manufacturers.size(); j++)
-			{
-				if (i == j) //Ourself
-				{
-					continue;
-				}
-
-				int available = model->manufacturers[j].GetAvailableOutput(inputElement.goodsId);
-				if (available >= need)
-				{
-					auto sqrMagnitude = (model->manufacturers[i].GetPosition() - model->manufacturers[j].GetPosition()).SqrMagnitude();
-
-					if (sqrMagnitude < bestMagnitude)
-					{
-						bestIndex = j;
-						bestMagnitude = sqrMagnitude;
-					}
-				}
-			}
-
-			if (bestIndex != -1)
-			{
-				//Make pledge
-				int transportCount = model->manufacturers[bestIndex].GetAvailableOutput(inputElement.goodsId);
-				model->manufacturers[i].AddDeliveryPledge(inputElement.goodsId, transportCount);
-				model->manufacturers[bestIndex].AddPickupPledge(inputElement.goodsId, transportCount);
-				CreateTransportRoute(bestIndex, i, inputElement.goodsId, transportCount);
-			}
-		}
-	}
 }
 
 void WorldController::NewHour()
 {
+	//Electricity update
 	model->currentPowerBalance = 0;
 	int electricityAvailable = 0;
 
@@ -164,12 +123,59 @@ void WorldController::NewHour()
 	}
 
 	model->currentPowerBalance += electricityAvailable;
+
+	//Check request needs
+	std::vector<TransportRequest> requests;
+	for (auto& city : model->cities)
+	{
+		city.CollectRequests(requests);
+	}
+	for (auto& manufacturer : model->manufacturers)
+	{
+		manufacturer.CollectRequests(requests);
+	}
+	//Find providers
+	for (auto& request : requests)
+	{
+		int bestIndex = -1;
+		float bestMagnitude = FLT_MAX;
+		for (size_t i = 0; i < model->manufacturers.size(); i++)
+		{
+			int available = model->manufacturers[i].GetAvailableSupply(request.goodsId);
+			if (available <= 0)
+			{
+				continue;
+			}
+
+			if (available < request.requestCount) //For now we must fullfill the whole demand in one go
+			{
+				continue;
+			}
+
+			auto sqrMagnitude = (request.requester->GetDeliveryPosition() - model->manufacturers[i].GetPickupPosition()).SqrMagnitude();
+			if (sqrMagnitude >= bestMagnitude)
+			{
+				continue;
+			}
+			bestIndex = i;
+			bestMagnitude = sqrMagnitude;
+		}
+
+		if (bestIndex != -1)
+		{
+			GoodsProvider& provider = model->manufacturers[bestIndex];
+			int transportCount = std::min(provider.GetAvailableSupply(request.goodsId), request.requestCount);
+			CreateTransportRoute(&provider, request.requester, request.goodsId, transportCount);
+		}
+	}
 }
 
-void WorldController::CreateTransportRoute(const int from, const int to, const uint64_t type, const int transportCount)
+void WorldController::CreateTransportRoute(GoodsProvider* provider, GoodsRequester* requester, const uint64_t type, const int transportCount)
 {
 	int transportIndex = -1;
 
+	//Reuse any idle transporters
+	//TODO: Improvement, get the closest one
 	for (size_t i = 0; i < model->transporters.size(); i++)
 	{
 		if (model->transporters[i].GetCurrentStatus() != Status::Inactive)
@@ -187,12 +193,13 @@ void WorldController::CreateTransportRoute(const int from, const int to, const u
 	}
 
 	HaulJob job;
-	job.pickupId = from;
-	job.pickupPoint = model->manufacturers[from].GetPosition();
-	job.deliveryId = to;
-	job.deliveryPoint = model->manufacturers[to].GetPosition();
-	job.count = transportCount;
+	job.requester = requester;
+	job.provider = provider;
 	job.goodsId = type;
+	job.goodsCount = transportCount;
 
 	model->transporters[transportIndex].SetJob(job);
+
+	provider->AddOutgoingReservation(type, transportCount);
+	requester->AddIncomingReservation(type, transportCount);
 }

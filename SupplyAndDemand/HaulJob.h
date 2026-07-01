@@ -1,13 +1,11 @@
 #pragma once
-#include "Manufacturer.h"
-#include "Float2.h"
+#include "GoodsRequester.h"
+#include "GoodsProvider.h"
 
 struct HaulJob
 {
-	int pickupId = 0;
-	Float2 pickupPoint{};
-	int deliveryId = 0; 
-	Float2 deliveryPoint{};
-	int count = 0;
-	uint64_t goodsId{};
+	GoodsRequester* requester;
+	GoodsProvider* provider;
+	uint64_t goodsId;
+	int goodsCount;
 };
