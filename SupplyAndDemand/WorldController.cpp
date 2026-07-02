@@ -138,27 +138,31 @@ void WorldController::NewHour()
 	for (auto& request : requests)
 	{
 		int bestIndex = -1;
-		float bestMagnitude = FLT_MAX;
+		float bestScore = -FLT_MAX;
 		for (size_t i = 0; i < model->manufacturers.size(); i++)
 		{
+			int score = 0;
 			int available = model->manufacturers[i].GetAvailableSupply(request.goodsId);
 			if (available <= 0)
 			{
 				continue;
 			}
 
-			if (available < request.requestCount) //For now we must fullfill the whole demand in one go
+			if (available < Transporter::LOW_CAPACITY) //We require at least a full load of a low capacity vehicle
 			{
 				continue;
 			}
+			score += available;
 
 			auto sqrMagnitude = (request.requester->GetDeliveryPosition() - model->manufacturers[i].GetPickupPosition()).SqrMagnitude();
-			if (sqrMagnitude >= bestMagnitude)
+			score -= sqrMagnitude;
+			
+			if (score <= bestScore)
 			{
 				continue;
 			}
 			bestIndex = i;
-			bestMagnitude = sqrMagnitude;
+			bestScore = score;
 		}
 
 		if (bestIndex != -1)
@@ -170,12 +174,14 @@ void WorldController::NewHour()
 	}
 }
 
-void WorldController::CreateTransportRoute(GoodsProvider* provider, GoodsRequester* requester, const uint64_t type, const int transportCount)
+void WorldController::CreateTransportRoute(GoodsProvider* provider, GoodsRequester* requester, const uint64_t type, int transportCount)
 {
 	int transportIndex = -1;
 
 	//Reuse any idle transporters
-	//TODO: Improvement, get the closest one
+	//TODO: Possible improvement, get the closest one
+
+	//TODO: Possible improvement spawn/get a good transport type, dependent on multiple factors such as speed, distance (from current, to provider and to requester) and transportCount
 	for (size_t i = 0; i < model->transporters.size(); i++)
 	{
 		if (model->transporters[i].GetCurrentStatus() != Status::Inactive)
@@ -188,9 +194,13 @@ void WorldController::CreateTransportRoute(GoodsProvider* provider, GoodsRequest
 
 	if (transportIndex == -1)
 	{
-		model->transporters.push_back(Transporter(Float2{ 0.0f, 0.0f }, 70));
+		model->transporters.push_back(Transporter(Float2{ 0.0f, 0.0f }, 70, Transporter::LOW_CAPACITY));
 		transportIndex = model->transporters.size() - 1;
 	}
+
+	Transporter& transporter = model->transporters[transportIndex];
+
+	transportCount = std::min(transportCount, transporter.GetCapacity());
 
 	HaulJob job;
 	job.requester = requester;
@@ -198,7 +208,7 @@ void WorldController::CreateTransportRoute(GoodsProvider* provider, GoodsRequest
 	job.goodsId = type;
 	job.goodsCount = transportCount;
 
-	model->transporters[transportIndex].SetJob(job);
+	transporter.SetJob(job);
 
 	provider->AddOutgoingReservation(type, transportCount);
 	requester->AddIncomingReservation(type, transportCount);

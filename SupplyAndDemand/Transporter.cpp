@@ -3,12 +3,13 @@
 #include "GoodsProvider.h"
 #include "GoodsRequester.h"
 
-Transporter::Transporter(Float2 position, float speed) : 
+Transporter::Transporter(Float2 position, float speed, int capacity) : 
 	Entity(position),
 	mySpeed(speed),
+	capacity(capacity),
 	renderData({{5.0f, 5.0f}, sf::Color::White })
 {
-
+	
 }
 
 void Transporter::Update(WorldModel* model, const double deltaTime, const double deltaHours)
