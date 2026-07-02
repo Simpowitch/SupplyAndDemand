@@ -6,20 +6,7 @@
 #include "GoodsRequester.h"
 #include "GoodsProvider.h"
 #include <array>
-
-struct GoodsState
-{
-	int current{};
-	int reserved{};
-
-	int GetUnreserved() const { return current - reserved; }
-};
-
-struct InventoryEntry
-{
-	uint64_t goodsId{};
-	GoodsState goods{};
-};
+#include "Goods.h"
 
 class Manufacturer : public Entity, public GoodsRequester, public GoodsProvider
 {
@@ -55,7 +42,7 @@ public:
 	std::string GetName() const override { return sharedData->name; }
 
 	//GoodsRequester
-	void CollectRequests(std::vector<TransportRequest>&) override;
+	void CollectRequests(std::vector<TransportRequest>& requests) override;
 	int PerformDelivery(uint64_t goodsId, int count) override;
 	void AddIncomingReservation(uint64_t goodsId, int count) override;
 	void RemoveIncomingReservation(uint64_t goodsId, int count) override;

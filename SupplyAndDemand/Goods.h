@@ -20,3 +20,17 @@ struct GoodsAmount
 	uint64_t goodsId;
 	int count;
 };
+
+struct GoodsState
+{
+	int current{};
+	int reserved{};
+
+	int GetUnreserved() const { return current - reserved; }
+};
+
+struct InventoryEntry
+{
+	uint64_t goodsId{};
+	GoodsState goods{};
+};

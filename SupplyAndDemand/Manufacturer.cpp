@@ -88,7 +88,7 @@ void Manufacturer::CollectRequests(std::vector<TransportRequest>& requests)
 		const int amount = DESIRED_INPUT_COUNT - slot.current - slot.reserved;
 		if (amount > 0)
 		{
-			requests.emplace_back(TransportRequest{ sharedData->recipe.input[i].goodsId, amount, this});
+			requests.push_back(TransportRequest{ sharedData->recipe.input[i].goodsId, amount, this});
 		}
 	}
 }
