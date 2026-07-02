@@ -46,14 +46,14 @@ public:
 	int PerformDelivery(uint64_t goodsId, int count) override;
 	void AddIncomingReservation(uint64_t goodsId, int count) override;
 	void RemoveIncomingReservation(uint64_t goodsId, int count) override;
-	Float2 GetDeliveryPosition() const override { return Entity::GetPosition() + Float2(-5, 0); } 
+	Float2 GetDeliveryPosition() const override { return Entity::GetPosition() + Float2(-10, 0); } 
 
 	//GoodsProvider
 	int GetAvailableSupply(const uint64_t goodsId) const override;
 	int PerformPickup(uint64_t goodsId, int count) override;
 	void AddOutgoingReservation(uint64_t goodsId, int count) override;
 	void RemoveOutgoingReservation(uint64_t goodsId, int count) override;
-	Float2 GetPickupPosition() const override { return Entity::GetPosition() + Float2(5, 0); } 
+	Float2 GetPickupPosition() const override { return Entity::GetPosition() + Float2(10, 0); } 
 
 private:
 	const ManufacturerSharedData* sharedData;
