@@ -22,21 +22,69 @@ void City::Update(WorldModel* model, const double deltaTime, const double deltaH
 	}
 }
 
-void City::CollectRequests(std::vector<TransportRequest>&)
+uint8_t City::GetInputSlotCount() const
 {
+	return MAX_INPUTS;
+}
+
+InventoryEntry City::GetInputInventory(const size_t index) const
+{
+	return InventoryEntry{ GOODS_ID[index], inputStorage[index] };
+}
+
+void City::CollectRequests(std::vector<TransportRequest>& requests)
+{
+	for (size_t i = 0; i < MAX_INPUTS; i++)
+	{
+		int desire = population;
+		int threshold = desire * (100 / REQUEST_FOOD_THRESHOLD_PERCENTAGE);
+		if (inputStorage[i].current + inputStorage[i].reserved >= threshold)
+		{
+			return;
+		}
+		int request = desire - inputStorage[i].current - inputStorage[i].reserved;
+		requests.push_back(TransportRequest{ GOODS_ID[i], request, this});
+	}
 }
 
 int City::PerformDelivery(uint64_t goodsId, int count)
 {
+	for (std::size_t i = 0; i < MAX_INPUTS && i < inputStorage.size(); ++i)
+	{
+		if (goodsId != GOODS_ID[i])
+		{
+			continue;
+		}
+		inputStorage[i].current += count;
+		return count;
+	}
 	return 0;
 }
 
 void City::AddIncomingReservation(uint64_t goodsId, int count)
 {
+	for (std::size_t i = 0; i < MAX_INPUTS && i < inputStorage.size(); ++i)
+	{
+		if (goodsId != GOODS_ID[i])
+		{
+			continue;
+		}
+		inputStorage[i].reserved += count;
+		return;
+	}
 }
 
 void City::RemoveIncomingReservation(uint64_t goodsId, int count)
 {
+	for (std::size_t i = 0; i < MAX_INPUTS && i < inputStorage.size(); ++i)
+	{
+		if (goodsId != GOODS_ID[i])
+		{
+			continue;
+		}
+		inputStorage[i].reserved -= count;
+		return;
+	}
 }
 
 void City::UpdateGrowth()

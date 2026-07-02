@@ -41,16 +41,20 @@ void WorldView::DrawSelf()
 
 		std::string infoText = city.GetName();
 		infoText += "\Population: " + std::to_string(city.GetPopulation());
-		infoText += "\nStorage: ";
-		const auto& storage = city.GetStorage();
-		for (const auto& storageElement : storage)
+		const auto inputCount = city.GetInputSlotCount();
+		if (inputCount > 0)
 		{
-			auto goods = goodsDatabase->TryGetElement(storageElement.first);
-			std::string name = goods == nullptr ? "Unknown" : goods->name;
-			infoText += "\n" + name + " " + std::to_string(storageElement.second);
+			infoText += "\nInput Storage: ";
+			for (size_t i = 0; i < inputCount; i++)
+			{
+				const auto& storageSlot = city.GetInputInventory(i);
+				auto goods = goodsDatabase->TryGetElement(storageSlot.goodsId);
+				std::string name = goods == nullptr ? "Unknown" : goods->name;
+				infoText += "\n" + name + " x" + std::to_string(storageSlot.goods.current) + " (" + std::to_string(storageSlot.goods.reserved) + ")";
+			}
 		}
 		text.setString(infoText);
-		text.setPosition({ position.x - rectangleShape.getSize().x * 0.5f, position.y - rectangleShape.getSize().y * 0.5f - text.getCharacterSize() });
+		text.setPosition({ position.x, position.y + rectangleShape.getSize().y * 0.5f});
 		renderer->Draw(text);
 	}
 
@@ -96,7 +100,7 @@ void WorldView::DrawSelf()
 		}
 		
 		text.setString(infoText);
-		text.setPosition({ position.x - rectangleShape.getSize().x * 0.5f, position.y - rectangleShape.getSize().y * 0.5f - text.getCharacterSize() });
+		text.setPosition({ position.x, position.y + rectangleShape.getSize().y * 0.5f});
 		renderer->Draw(text);
 	}
 
@@ -122,7 +126,7 @@ void WorldView::DrawSelf()
 		infoText += "\nSpeed: " + std::to_string(transporter.GetSpeed());
 
 		text.setString(infoText);
-		text.setPosition({ position.x - rectangleShape.getSize().x * 0.5f, position.y - rectangleShape.getSize().y * 0.5f - text.getCharacterSize() });
+		text.setPosition({ position.x, position.y + rectangleShape.getSize().y * 0.5f});
 		renderer->Draw(text);
 	}
 
