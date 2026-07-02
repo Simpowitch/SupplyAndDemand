@@ -124,7 +124,7 @@ void WorldView::DrawSelf()
 		std::string name = goods == nullptr ? "Unknown" : goods->name;
 		if (status != Status::Inactive)
 		{
-			infoText += "\nLast/Current Job: Delivering " + name + " x" + std::to_string(job.goodsCount) + " from " + job.provider->GetName() + " to " + job.requester->GetName();
+			infoText += "\nJob: Delivering " + name + " x" + std::to_string(job.goodsCount) + " from " + job.provider->GetName() + " to " + job.requester->GetName();
 		}
 		infoText += "\nCargo: " + name + " x" + std::to_string(transporter.GetGoodsCount());
 		infoText += "\nSpeed: " + std::to_string(transporter.GetSpeed());
