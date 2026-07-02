@@ -15,7 +15,6 @@ void WorldView::DrawSelf()
 	View::DrawSelf();
 
 	buffer << "Power balance: " << model->currentPowerBalance << std::endl;
-	buffer << "Population: " << model->population << std::endl;
 
 	PrintLine("-Time-");
 	buffer << "Clock: " << model->clock << std::endl;
