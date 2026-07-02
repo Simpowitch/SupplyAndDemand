@@ -40,7 +40,7 @@ void WorldView::DrawSelf()
 		renderer->Draw(rectangleShape);
 
 		std::string infoText = city.GetName();
-		infoText += "\Population: " + std::to_string(city.GetPopulation());
+		infoText += "\nPopulation: " + std::to_string(city.GetPopulation());
 		const auto inputCount = city.GetInputSlotCount();
 		if (inputCount > 0)
 		{

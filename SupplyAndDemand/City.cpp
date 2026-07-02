@@ -1,5 +1,6 @@
 #include "City.h"
 #include "Hasher.h"
+#include "math.h"
 
 City::City(const Float2 position, const std::string& name, const int population) :
 	Entity(position),
@@ -37,7 +38,7 @@ void City::CollectRequests(std::vector<TransportRequest>& requests)
 	for (size_t i = 0; i < MAX_INPUTS; i++)
 	{
 		int desire = population;
-		int threshold = desire * (100 / REQUEST_FOOD_THRESHOLD_PERCENTAGE);
+		int threshold = desire * (100 / REQUEST_GOODS_THRESHOLD_PERCENTAGE);
 		if (inputStorage[i].current + inputStorage[i].reserved >= threshold)
 		{
 			return;
@@ -89,24 +90,45 @@ void City::RemoveIncomingReservation(uint64_t goodsId, int count)
 
 void City::UpdateGrowth()
 {
-	//constexpr uint64_t FOOD_ID = HashString("bread");
-	//constexpr float GROWTH_RATE_YEARLY = 1 + (0.0025f / 365); //Simplify to 365 days a year
-	//constexpr float STARVATION_RATE_DAILY = 1 - (1.0f / 75); //Starvation sets in between 2-3 months, averaged to 75 days
+	constexpr int DAILY_UPDATES = 24;
+	constexpr float GROWTH_RATE = 1 + (0.0025f / 365 / DAILY_UPDATES); //365 days per year, 24 hours a day update
+	constexpr float LEAVE_RATE = 1 - (1.0f / 365 / DAILY_UPDATES); //365 days per year, 24 hours a day update
 
-	//int initialFoodToSupply = population;
-	//int foodToSupply = initialFoodToSupply;
-	//int availableFood = storage.at(FOOD_ID);
-	//foodToSupply -= availableFood;
+	int contentScore = 0;
 
-	//float supplyRate = (foodToSupply - initialFoodToSupply) / initialFoodToSupply;
-	//if (supplyRate < 1.0f)
-	//{
-	//	auto starvationMultiplier = (1.0f - supplyRate) * STARVATION_RATE_DAILY;
-	//	population *= starvationMultiplier;
-	//}
-	//if (supplyRate > 0.0f)
-	//{
-	//	auto growthMultiplier = GROWTH_RATE_YEARLY * supplyRate;
-	//	population *= growthMultiplier;
-	//}
+	for (size_t i = 0; i < MAX_INPUTS; i++)
+	{
+		int desire = population;
+		int availability = inputStorage[i].current;
+		int highThreshold = desire * (100 / REQUEST_GOODS_THRESHOLD_PERCENTAGE);
+		int lowThreshold = desire * (100 / CRITICA_GOODS_THRESHOLD_PERCENTAGE);
+
+		if (availability >= highThreshold)
+		{
+			contentScore++;
+		}
+		else if (availability < lowThreshold)
+		{
+			contentScore--;
+		}
+
+		inputStorage[i].current -= desire / DAILY_UPDATES;
+		if (inputStorage[i].current < 0)
+		{
+			inputStorage[i].current = 0;
+		}
+	}
+
+	if (contentScore > 0)
+	{
+		auto growthMultiplier = std::pow(GROWTH_RATE, contentScore);
+		population *= growthMultiplier;
+	}
+	if (contentScore < 0)
+	{
+		auto starvationMultiplier = std::pow(LEAVE_RATE, -contentScore);
+		population *= starvationMultiplier;
+	}
+
+
 }
