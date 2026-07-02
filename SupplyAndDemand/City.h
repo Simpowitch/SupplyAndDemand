@@ -30,6 +30,8 @@ private:
 	static constexpr double GROWTH_UPDATE_INTERVAL = 1.0;
 	static constexpr int REQUEST_GOODS_THRESHOLD_PERCENTAGE = 80;
 	static constexpr int CRITICA_GOODS_THRESHOLD_PERCENTAGE = 20;
+	static constexpr int INITIAL_DAYS_WITH_SUPPLIES = 5;
+	static constexpr int DESIRED_DAYS_WITH_SUPPLIES = 10;
 	static constexpr uint8_t MAX_INPUTS = 2;
 	static constexpr std::array<uint64_t, MAX_INPUTS> GOODS_ID = { HashString("bread"), HashString("steel") };
 

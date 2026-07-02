@@ -9,7 +9,10 @@ City::City(const Float2 position, const std::string& name, const int population)
 	renderData({ {10.0f, 10.0f}, sf::Color::Magenta}),
 	growthUpdateTimer(GROWTH_UPDATE_INTERVAL)
 {
-
+	for (size_t i = 0; i < MAX_INPUTS; i++)
+	{
+		inputStorage[i].current = population * INITIAL_DAYS_WITH_SUPPLIES;
+	}
 }
 
 void City::Update(WorldModel* model, const double deltaTime, const double deltaHours)
@@ -37,7 +40,7 @@ void City::CollectRequests(std::vector<TransportRequest>& requests)
 {
 	for (size_t i = 0; i < MAX_INPUTS; i++)
 	{
-		int desire = population;
+		int desire = population * DESIRED_DAYS_WITH_SUPPLIES;
 		int threshold = desire * (100 / REQUEST_GOODS_THRESHOLD_PERCENTAGE);
 		if (inputStorage[i].current + inputStorage[i].reserved >= threshold)
 		{
@@ -129,6 +132,4 @@ void City::UpdateGrowth()
 		auto starvationMultiplier = std::pow(LEAVE_RATE, -contentScore);
 		population *= starvationMultiplier;
 	}
-
-
 }
