@@ -116,12 +116,16 @@ void WorldView::DrawSelf()
 		renderer->Draw(rectangleShape);
 
 		std::string infoText = "#" + std::to_string(++index) + " : Transporter";
-		std::string status = ToString(transporter.GetCurrentStatus());
-		infoText += "\n" + status;
+		const auto& status = transporter.GetCurrentStatus();
+		std::string status_text = ToString(status);
+		infoText += "\n" + status_text;
 		const HaulJob job = transporter.GetJob();
 		auto goods = goodsDatabase->TryGetElement(job.goodsId);
 		std::string name = goods == nullptr ? "Unknown" : goods->name;
-		infoText += "\nLast/Current Job: Delivering " + name + " x" + std::to_string(job.goodsCount) + " from " + job.provider->GetName() + " to " + job.requester->GetName();
+		if (status != Status::Inactive)
+		{
+			infoText += "\nLast/Current Job: Delivering " + name + " x" + std::to_string(job.goodsCount) + " from " + job.provider->GetName() + " to " + job.requester->GetName();
+		}
 		infoText += "\nCargo: " + name + " x" + std::to_string(transporter.GetGoodsCount());
 		infoText += "\nSpeed: " + std::to_string(transporter.GetSpeed());
 
