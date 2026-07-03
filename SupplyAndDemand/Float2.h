@@ -44,15 +44,27 @@ struct Float2
 		return *this;
 	}
 
-	Float2 operator*(float m) const
+	Float2 operator*(const float m) const
 	{
 		return Float2(x * m, y * m);
 	}
 
-	Float2 operator*=(float m)
+	Float2 operator*=(const float m)
 	{
 		x *= m;
 		y *= m;
+		return *this;
+	}
+
+	Float2 operator/(const float d) const
+	{
+		return Float2(x / d, y / d);
+	}
+
+	Float2 operator /=(const float d)
+	{
+		x /= d;
+		y /= d;
 		return *this;
 	}
 	

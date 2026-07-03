@@ -194,7 +194,7 @@ void WorldController::CreateTransportRoute(GoodsProvider* provider, GoodsRequest
 
 	if (transportIndex == -1)
 	{
-		model->transporters.push_back(Transporter(Float2{ 0.0f, 0.0f }, 70, Transporter::LOW_CAPACITY));
+		model->transporters.push_back(Transporter(model->size / 2 , 70, Transporter::LOW_CAPACITY));
 		transportIndex = model->transporters.size() - 1;
 	}
 
